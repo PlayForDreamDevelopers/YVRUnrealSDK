@@ -1,0 +1,39 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0.5",
+	"FriendlyName": "Online Subsystem Yvr",
+	"Description": "Access to Yvr platform",
+	"Category": "Online Platform",
+	"CreatedBy": "Yvr Technology Co., Ltd",
+	"CreatedByURL": "",
+	"DocsURL": "https://developer.yvrdream.com/yvrdoc/unreal/manual/Introduction.html",
+	"MarketplaceURL": "",
+	"SupportURL": "http://developer.yvrdream.com/",
+	"EnabledByDefault": true,
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": true,
+	"Modules": [
+		{
+			"Name": "OnlineSubsystemYvr",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Android"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "OnlineSubsystem",
+			"Enabled": true
+		},
+		{
+			"Name": "OnlineSubsystemUtils",
+			"Enabled": true
+		}
+	]
+}

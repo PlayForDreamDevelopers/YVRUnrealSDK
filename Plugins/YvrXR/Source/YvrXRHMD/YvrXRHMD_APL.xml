@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Elias additions-->
+<root xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- init section is always evaluated once per architecture -->
+  <init>
+    <setStringFromProperty result="HandTrackingSupport" ini="Engine" section="/Script/YvrXRHMD.YvrXRHMDSettings" property="HandTrackingSupport" default="ControllersOnly"/>
+    <setBoolFromProperty result="bUsingOSSplash" ini="Engine" section="/Script/YvrXRHMD.YvrXRHMDSettings" property="bUsingOSSplash" default="false"/>
+    <setBoolFromProperty result="bAnchorSupportEnabled" ini="Engine" section="/Script/YvrXRHMD.YvrXRHMDSettings" property="bAnchorSupportEnabled" default="false"/>
+    <setBoolFromProperty result="bSceneSupportEnabled" ini="Engine" section="/Script/YvrXRHMD.YvrXRHMDSettings" property="bSceneSupportEnabled" default="false"/>
+  </init>
+
+  <!-- optional updates applied to AndroidManifest.xml -->
+  <androidManifestUpdates>
+    <addPermission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <addPermission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <addPermission android:name="android.permission.WRITE_SETTINGS"/>
+    <addPermission android:name="android.permission.INTERNET"/>
+    <addPermission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <addPermission android:name="android.permission.CHANGE_CONFIGURATION" />
+
+    <addFeature android:name="android.hardware.vr.headtracking" android:version="1" android:required="true" />
+
+    <addElements tag="application">
+      <meta-data android:name="com.yvr.application.mode" android:value="vr_only"/>
+    </addElements>
+
+    <addElements tag="application">
+      <meta-data android:name="yvr.sdk.version" android:value="Unreal_YvrXR_2.7.0"/>
+    </addElements>
+
+    <addElements tag="intent-filter">
+      <category android:name="org.khronos.openxr.intent.category.IMMERSIVE_HMD"/>
+    </addElements>
+
+    <!-- Add Hand Tracking Flag -->
+    <setBoolIsEqual result="bHandsOnly" arg1="$S(HandTrackingSupport)" arg2="HandsOnly"/>
+    <setBoolIsEqual result="bControllersAndHands" arg1="$S(HandTrackingSupport)" arg2="ControllersAndHands"/>
+    <setBoolOr result="bEnableHandTracking" arg1="$B(bHandsOnly)" arg2="$B(bControllersAndHands)"/>
+    <if condition="bEnableHandTracking">
+      <true>
+        <addPermission android:name="com.yvr.permission.HAND_TRACKING" />
+        <addFeature android:name="yvr.software.handtracking" android:required="$B(bHandsOnly)"/>
+      </true>
+    </if>
+
+    <!-- Add Splash Flag -->
+    <if condition="bUsingOSSplash">
+      <true>
+        <addElements tag="application">
+          <meta-data android:name="com.yvr.ossplash" android:value="true" />
+        </addElements>
+      </true>
+    </if>
+
+    <!-- Add Flags for Spatial Anchors-->
+    <if condition="bAnchorSupportEnabled">
+      <true>
+        <addPermission android:name="com.yvr.permission.USE_ANCHOR_API"/>
+      </true>
+    </if>
+    <!-- Add Flags for Scene-->
+    <if condition="bSceneSupportEnabled">
+      <true>
+        <addPermission android:name="com.yvr.permission.USE_SCENE"/>
+      </true>
+    </if>
+
+  </androidManifestUpdates>
+
+  <!-- optional files or directories to copy to Intermediate/Android/APK -->
+  <resourceCopies>
+    <isArch arch="armeabi-v7a">
+      <log text="Copying YVR 32bit runtime files to staging" />
+      <copyFile src="$S(PluginDir)/../../Libs/armeabi-v7a/libopenxr_loader.so"
+                dst="$S(BuildDir)/libs/armeabi-v7a/libopenxr_loader.so" />
+    </isArch>
+    <isArch arch="arm64-v8a">
+      <log text="Copying YVR 64bit runtime files to staging" />
+      <copyFile src="$S(PluginDir)/../../Libs/arm64-v8a/libopenxr_loader.so"
+                dst="$S(BuildDir)/libs/arm64-v8a/libopenxr_loader.so" />
+    </isArch>
+
+    <copyFile src="$S(BuildDir)/../../../vr_splash.png" dst="$S(BuildDir)/assets/vr_splash.png" />
+  </resourceCopies>
+
+  <gameActivityClassAdditions>
+
+    <insert>
+      public boolean AndroidThunkJava_IsOculusMobileApplication()
+      {
+      return true;
+      }
+
+    </insert>
+  </gameActivityClassAdditions>
+
+  <!-- optional additions to proguard -->
+  <proguardAdditions>
+  </proguardAdditions>
+
+  <!-- optional libraries to load in GameActivity.java before libUE4.so -->
+  <soLoadLibrary>
+  </soLoadLibrary>
+</root>

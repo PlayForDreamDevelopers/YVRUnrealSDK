@@ -1,0 +1,61 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "3.0.1",
+	"FriendlyName": "YVR XR",
+	"Description": "YvrXR is an YVR OpenXR implementation",
+	"Category": "Virtual Reality",
+	"CreatedBy": "YVR Technology Co., Ltd",
+	"CreatedByURL": "https://pfdm.cn",
+	"DocsURL": "https://developer.yvrdream.com/yvrdoc/unreal/manual/Introduction.html",
+	"MarketplaceURL": "",
+	"SupportURL": "http://developer.yvrdream.com",
+	"EnabledByDefault": true,
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"Installed": true,
+	"SupportedTargetPlatforms": [
+		"Win64",
+		"Android"
+	],
+	"Modules": [
+		{
+			"Name": "YvrXRHMD",
+			"Type": "Runtime",
+			"LoadingPhase": "PostConfigInit",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Android"
+			]
+		},
+		{
+			"Name": "YvrXRInput",
+			"Type": "Runtime",
+			"LoadingPhase": "PostEngineInit",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Android"
+			]
+		},
+		{
+			"Name": "YvrXRMR",
+			"Type": "Runtime",
+			"LoadingPhase": "PostEngineInit",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Android"
+			]
+		},
+		{
+			"Name": "YvrXREditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ProceduralMeshComponent",
+			"Enabled": true
+		}
+	]
+}

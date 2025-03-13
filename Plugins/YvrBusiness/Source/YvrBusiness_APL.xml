@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root xmlns:android="http://schemas.android.com/apk/res/android">
+  <init>
+  </init>
+  <androidManifestUpdates>
+  </androidManifestUpdates>
+  <resourceCopies>
+    <copyFile src="$S(PluginDir)/../Libs/tobSDK.aar"
+                dst="$S(BuildDir)/gradle/app/libs/tobSDK.aar" />
+  </resourceCopies>
+  <buildGradleAdditions>
+    <insert>
+      dependencies
+      {
+      implementation files('libs/tobSDK.aar')
+      }
+    </insert>
+  </buildGradleAdditions>
+  <gameActivityImportAdditions>
+    <insert>
+      import android.util.Log;
+      import com.yvr.tobsettings.ToBServiceHelper;
+      import java.lang.Object;
+    </insert>
+
+  </gameActivityImportAdditions>
+  <gameActivityClassAdditions>
+    <insert>
+      public static void Yvr_Init(Context context)
+      {
+      ToBServiceHelper.init(context);
+      }
+      public void Yvr_Begin_Init()
+      {
+      Context context = getApplicationContext();
+      Yvr_Init(context);
+      }
+      public String Yvr_GetDeviceSn()
+      {
+      return ToBServiceHelper.getInstance().getDeviceSn();
+      }
+      public String Yvr_GetDeviceModel()
+      {
+      return ToBServiceHelper.getInstance().getDeviceModel();
+      }
+      public String Yvr_GetSoftwareVersion()
+      {
+      return ToBServiceHelper.getInstance().getSoftwareVersion();
+      }
+    </insert>
+  </gameActivityClassAdditions>
+</root>

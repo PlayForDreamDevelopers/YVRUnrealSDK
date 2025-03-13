@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- init section is always evaluated once per architecture -->
+  <init>
+
+  </init>
+
+  <!-- optional updates applied to AndroidManifest.xml -->
+  <androidManifestUpdates>
+
+  </androidManifestUpdates>
+
+
+  <!-- optional files or directories to copy to Intermediate/Android/APK -->
+  <resourceCopies>
+    <copyFile src="$S(PluginDir)/../Libs/Platform.aar"
+                dst="$S(BuildDir)/gradle/app/libs/Platform.aar" />
+  </resourceCopies>
+
+  <buildGradleAdditions>
+    <insert>
+      dependencies {
+      implementation files('libs/Platform.aar')
+      }
+    </insert>
+  </buildGradleAdditions>
+
+  <gameActivityImportAdditions>
+    <insert>
+      import java.lang.Object;
+      import com.yvr.thirdsdk.Request;
+      import com.yvr.thirdsdk.Account;
+      import com.yvr.thirdsdk.Achievement;
+      import com.yvr.thirdsdk.YvrPermission;
+      import com.yvr.thirdsdk.FriendsManager;
+      import com.yvr.thirdsdk.LeaderBoard;
+      import com.yvr.thirdsdk.IAP;
+      import com.yvr.thirdsdk.Sport;
+    </insert>
+
+  </gameActivityImportAdditions>
+
+  <gameActivityClassAdditions>
+
+    <insert>
+      public boolean initYvrPlatformSdk(long appId)
+      {
+      return Request.initYvrPlatformSdk(appId, this);
+      }
+
+      public Object yvr_PopMessage()
+      {
+      return Request.yvr_PopMessage();
+      }
+      public int yvr_getRequestId(Object obj)
+      {
+      return Request.yvr_getRequestId(obj);
+      }
+      public String yvr_getRequestType(Object obj)
+      {
+      return Request.yvr_getRequestType(obj);
+      }
+      public boolean yvr_isError(Object obj)
+      {
+      return Request.yvr_isError(obj);
+      }
+      public String yvr_getErrorMsg(Object obj)
+      {
+      return Request.yvr_getErrorMsg(obj);
+      }
+      public int yvr_getErrorCode(Object obj)
+      {
+      return Request.yvr_getErrorCode(obj);
+      }
+      public void yvr_freeRequest(int reqCode)
+      {
+      Request.yvr_freeRequest(reqCode);
+      }
+
+      public int yvr_user_GetLoggedInUser()
+      {
+      return Account.yvr_user_GetLoggedInUser();
+      }
+      public int getYvrAccountId(Object obj)
+      {
+      return Account.getYvrAccountId(obj);
+      }
+      public String getYvrUserName(Object obj)
+      {
+      return Account.getYvrUserName(obj);
+      }
+      public String getYvrUserIcon(Object obj)
+      {
+      return Account.getYvrUserIcon(obj);
+      }
+      public int getYvrUserSex(Object obj)
+      {
+      return Account.getYvrUserSex(obj);
+      }
+
+
+      public int addCount(String apiName,long count)
+      {
+      return Achievement.addCount(apiName, count);
+      }
+      public int addFields(String apiName,String fields)
+      {
+      return Achievement.addFields(apiName, fields);
+      }
+      public int unlockAchievement(String apiName)
+      {
+      return Achievement.unlockAchievement(apiName);
+      }
+      public int getAllDefinitions()
+      {
+      return Achievement.getAllDefinitions();
+      }
+      public int getDefinitionByNames(String names[])
+      {
+      return Achievement.getDefinitionByNames(names);
+      }
+
+      public int getSizeOfAllDefinitions(Object obj)
+      {
+      return Achievement.getSizeOfAllDefinitions(obj);
+      }
+      public Object getElementOfDefinitions(Object obj,int index)
+      {
+      return Achievement.getElementOfDefinitions(obj, index);
+      }
+      public Object getIdFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getIdFromElementOfDefinitions(obj);
+      }
+      public String getApiNameFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getApiNameFromElementOfDefinitions(obj);
+      }
+      public int getAchievementTypeFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getAchievementTypeFromElementOfDefinitions(obj);
+      }
+      public int getPolicyFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getPolicyFromElementOfDefinitions(obj);
+      }
+      public int getTargetFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getTargetFromElementOfDefinitions(obj);
+      }
+      public int getBitfieldLengthFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getBitfieldLengthFromElementOfDefinitions(obj);
+      }
+      public boolean getIsAchievedFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getIsAchievedFromElementOfDefinitions(obj);
+      }
+      public String getTitleFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getTitleFromElementOfDefinitions(obj);
+      }
+      public String getDescriptionFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getDescriptionFromElementOfDefinitions(obj);
+      }
+      public String getUnlockedDescriptionFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getUnlockedDescriptionFromElementOfDefinitions(obj);
+      }
+      public boolean getIsSecretFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getIsSecretFromElementOfDefinitions(obj);
+      }
+      public String getLockedImageFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getLockedImageFromElementOfDefinitions(obj);
+      }
+      public String getUnlockedImageFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getUnlockedImageFromElementOfDefinitions(obj);
+      }
+      public long getCreatedTimeFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getCreatedTimeFromElementOfDefinitions(obj);
+      }
+      public long getUpdateTimeFromElementOfDefinitions(Object obj)
+      {
+      return Achievement.getUpdateTimeFromElementOfDefinitions(obj);
+      }
+
+      public int GetAllProgress()
+      {
+      return Achievement.GetAllProgress();
+      }
+      public int GetProgressByName(String names[])
+      {
+      return Achievement.GetProgressByName(names);
+      }
+      public int getSizeOfAchievementProgress(Object obj)
+      {
+      return Achievement.getSizeOfAchievementProgress(obj);
+      }
+      public Object getElementOfAchievementProgress(Object obj, int index)
+      {
+      return Achievement.getElementOfAchievementProgress(obj, index);
+      }
+      public int getIdFromElementOfAchievementProgress(Object obj)
+      {
+      return Achievement.getIdFromElementOfAchievementProgress(obj);
+      }
+      public Object getDefinitionFromElementOfAchievementProgress(Object obj)
+      {
+      return Achievement.getDefinitionFromElementOfAchievementProgress(obj);
+      }
+      public String getNameFromDefinitionOfAchievementProgress(Object obj)
+      {
+      return Achievement.getNameFromDefinitionOfAchievementProgress(obj);
+      }
+      public int getTargetFromDefinitionOfAchievementProgress(Object obj)
+      {
+      return Achievement.getTargetFromDefinitionOfAchievementProgress(obj);
+      }
+      public int getCountProgressFromElementOfAchievementProgress(Object obj)
+      {
+      return Achievement.getCountProgressFromElementOfAchievementProgress(obj);
+      }
+      public String getBitfieldProgressFromElementOfAchievementProgress(Object obj)
+      {
+      return Achievement.getBitfieldProgressFromElementOfAchievementProgress(obj);
+      }
+      public boolean isUnlockedFromElementOfAchievementProgress(Object obj)
+      {
+      return Achievement.isUnlockedFromElementOfAchievementProgress(obj);
+      }
+      public long getUnlockTimeFromElementOfAchievementProgress(Object obj)
+      {
+      return Achievement.getUnlockTimeFromElementOfAchievementProgress(obj);
+      }
+
+      public int getViewerEntitled()
+      {
+      return YvrPermission.getViewerEntitled();
+      }
+      public boolean isViewerEntitled(Object obj)
+      {
+      return YvrPermission.isViewerEntitled(obj);
+      }
+
+      public int getYvrFriends()
+      {
+      return FriendsManager.getYvrFriends();
+      }
+      public int getFriendsSize(Object obj)
+      {
+      return FriendsManager.getFriendsSize(obj);
+      }
+      public Object getItemOfFriendsList(Object obj,int index)
+      {
+      return FriendsManager.getItemOfFriendsList(obj, index);
+      }
+      public int getActIdOfFriendItem(Object obj)
+      {
+      return FriendsManager.getActIdOfFriendItem(obj);
+      }
+      public String getNickOfFriendItem(Object obj)
+      {
+      return FriendsManager.getNickOfFriendItem(obj);
+      }
+      public int getAgeOfFriendItem(Object obj)
+      {
+      return FriendsManager.getAgeOfFriendItem(obj);
+      }
+      public int getSexOfFriendItem(Object obj)
+      {
+      return FriendsManager.getSexOfFriendItem(obj);
+      }
+      public String getIconOfFriendItem(Object obj)
+      {
+      return FriendsManager.getIconOfFriendItem(obj);
+      }
+      public int getOnlineOfFriendItem(Object obj)
+      {
+      return FriendsManager.getOnlineOfFriendItem(obj);
+      }
+      public Object getUsingAppOfFriendItem(Object obj)
+      {
+      return FriendsManager.getUsingAppOfFriendItem(obj);
+      }
+      public String getScoverOfUsingApp(Object obj)
+      {
+      return FriendsManager.getScoverOfUsingApp(obj);
+      }
+      public int getTypeOfUsingApp(Object obj)
+      {
+      return FriendsManager.getTypeOfUsingApp(obj);
+      }
+      public String getPkgOfUsingApp(Object obj)
+      {
+      return FriendsManager.getPkgOfUsingApp(obj);
+      }
+      public String getNameOfUsingApp(Object obj)
+      {
+      return FriendsManager.getNameOfUsingApp(obj);
+      }
+
+      public int getYvrFriendInfo(int index)
+      {
+      return FriendsManager.getYvrFriendInfo(index);
+      }
+      public int getActIdOfUser(Object obj)
+      {
+      return FriendsManager.getActIdOfUser(obj);
+      }
+      public String getNickOfUser(Object obj)
+      {
+      return FriendsManager.getNickOfUser(obj);
+      }
+      public int getAgeOfUser(Object obj)
+      {
+      return FriendsManager.getAgeOfUser(obj);
+      }
+      public int getSexOfUser(Object obj)
+      {
+      return FriendsManager.getSexOfUser(obj);
+      }
+      public String getIconOfUser(Object obj)
+      {
+      return FriendsManager.getIconOfUser(obj);
+      }
+      public int getOnlineOfUser(Object obj)
+      {
+      return FriendsManager.getOnlineOfUser(obj);
+      }
+
+      public int reqLeaderboardList(String name, String page, String sort, long size)
+      {
+      long current = 1;
+      long start = 0;
+      String direction = "";
+      return LeaderBoard.reqLeaderboardList(current, start, direction, size, name, page, sort);
+      }
+      public int addItem(String name, double score, byte data[], long length, int update)
+      {
+      return LeaderBoard.addItem(name, score, data, length, update);
+      }
+
+      public Object getReqLDBLists(Object obj)
+      {
+      return LeaderBoard.getReqLDBLists(obj);
+      }
+      public int getSizeOfLDBLists(Object obj)
+      {
+      return LeaderBoard.getSizeOfLDBLists(obj);
+      }
+      public Object getItemOfLDBLists(Object obj, int index)
+      {
+      return LeaderBoard.getItemOfLDBLists(obj, index);
+      }
+      public long getLeaderboardUserIdOfCurrLDB(Object obj)
+      {
+      return LeaderBoard.getLeaderboardUserIdOfCurrLDB(obj);
+      }
+      public String getLeaderboardUserNameOfCurrLDB(Object obj)
+      {
+      return LeaderBoard.getLeaderboardUserNameOfCurrLDB(obj);
+      }
+      public double getLeaderboardScoreOfCurrLDB(Object obj)
+      {
+      return LeaderBoard.getLeaderboardScoreOfCurrLDB(obj);
+      }
+      public long getLeaderboardSortOfCurrLDB(Object obj)
+      {
+      return LeaderBoard.getLeaderboardSortOfCurrLDB(obj);
+      }
+
+      public int getViewerPurchases()
+      {
+      return IAP.getViewerPurchases();
+      }
+      public int getPurchaseSize(Object obj)
+      {
+      return IAP.getPurchaseSize(obj);
+      }
+      public Object getPurchaseByIndex(Object obj, int index)
+      {
+      return IAP.getPurchaseByIndex(obj, index);
+      }
+      public String getSkuOfPurchase(Object obj)
+      {
+      return IAP.getSkuOfPurchase(obj);
+      }
+      public String getNameOfPurchase(Object obj)
+      {
+      return IAP.getNameOfPurchase(obj);
+      }
+      public String getScoverOfPurchase(Object obj)
+      {
+      return IAP.getScoverOfPurchase(obj);
+      }
+      public String getTradeNoOfPurchase(Object obj)
+      {
+      return IAP.getTradeNoOfPurchase(obj);
+      }
+      public int getTypeOfPurchase(Object obj)
+      {
+      return IAP.getTypeOfPurchase(obj);
+      }
+
+      public int getProductsBySKU(String[] skus)
+      {
+      return IAP.getProductsBySKU(skus);
+      }
+      public int getProductSize(Object obj)
+      {
+      return IAP.getProductSize(obj);
+      }
+      public Object getProductByIndex(Object obj, int index)
+      {
+      return IAP.getProductByIndex(obj, index);
+      }
+      public String getSkuOfProduct(Object obj)
+      {
+      return IAP.getSkuOfProduct(obj);
+      }
+      public String getNameOfProduct(Object obj)
+      {
+      return IAP.getNameOfProduct(obj);
+      }
+      public float getPriceOfProduct(Object obj)
+      {
+      return IAP.getPriceOfProduct(obj);
+      }
+      public String getBriefOfProduct(Object obj)
+      {
+      return IAP.getBriefOfProduct(obj);
+      }
+      public String getScoverOfProduct(Object obj)
+      {
+      return IAP.getScoverOfProduct(obj);
+      }
+      public int getTypeOfProduct(Object obj)
+      {
+      return IAP.getTypeOfProduct(obj);
+      }
+
+      public int launchCheckoutFlow(String sku, float amount)
+      {
+      return IAP.launchCheckoutFlow(sku, amount);
+      }
+      public Object getPurchaseByMessage(Object obj)
+      {
+      return IAP.getPurchaseByMessage(obj);
+      }
+      public int consumePurchase(String sku)
+      {
+      return IAP.consumePurchase(sku);
+      }
+
+      public int getUserInfo()
+      {
+      return Sport.getUserInfo();
+      }
+      public int getGender(Object obj)
+      {
+      return Sport.getGender(obj);
+      }
+      public int getBirthDay(Object obj)
+      {
+      return Sport.getBirthDay(obj);
+      }
+      public int getStature(Object obj)
+      {
+      return Sport.getStature(obj);
+      }
+      public int getWeight(Object obj)
+      {
+      return Sport.getWeight(obj);
+      }
+      public int getPlanCalorie(Object obj)
+      {
+      return Sport.getPlanCalorie(obj);
+      }
+      public int getPlanDurationInSeconds(Object obj)
+      {
+      return Sport.getPlanDurationInSeconds(obj);
+      }
+      public int getDaysPerWeek(Object obj)
+      {
+      return Sport.getDaysPerWeek(obj);
+      }
+      
+      public int getSummary(long beginTime, long endTime)
+      {
+      return Sport.getSummary(beginTime, endTime);
+      }
+      public int getSummary(String beginTime, String endTime)
+      {
+      return Sport.getSummary(beginTime, endTime);
+      }
+      public long getSummaryDurationInSeconds(Object obj)
+      {
+      return Sport.getSummaryDurationInSeconds(obj);
+      }
+      public double getSummaryCalorie(Object obj)
+      {
+      return Sport.getSummaryCalorie(obj);
+      }
+      
+      public int getDailySummary(long beginTime, long endTime)
+      {
+      return Sport.getDailySummary(beginTime, endTime);
+      }
+      public int getDailySummary(String beginTime, String endTime)
+      {
+      return Sport.getDailySummary(beginTime, endTime);
+      }
+      public int getDailySummarySize(Object obj)
+      {
+      return Sport.getDailySummarySize(obj);
+      }
+      public Object getDailySummaryByIndex(Object obj, int i)
+      {
+      return Sport.getDailySummaryByIndex(obj, i);
+      }
+      public String getDailySummaryDate(Object obj)
+      {
+      return Sport.getDailySummaryDate(obj);
+      }
+      public int getDailySummaryPlanDurationInSeconds(Object obj)
+      {
+      return Sport.getDailySummaryPlanDurationInSeconds(obj);
+      }
+      public long getDailySummaryDurationInSeconds(Object obj)
+      {
+      return Sport.getDailySummaryDurationInSeconds(obj);
+      }
+      public double getDailySummaryCalorie(Object obj)
+      {
+      return Sport.getDailySummaryCalorie(obj);
+      }
+      public double getDailySummaryPlanCalorie(Object obj)
+      {
+      return Sport.getDailySummaryPlanCalorie(obj);
+      }
+    </insert>
+
+  </gameActivityClassAdditions>
+
+  <gameActivityOnCreateAdditions>
+    <insert>
+    </insert>
+  </gameActivityOnCreateAdditions>
+  <gameActivityOnStartAdditions>
+
+  </gameActivityOnStartAdditions>
+
+  <gameActivityOnResumeAdditions>
+  </gameActivityOnResumeAdditions>
+
+  <gameActivityOnPauseAdditions>
+
+  </gameActivityOnPauseAdditions>
+
+  <gameActivityOnStopAdditions>
+
+  </gameActivityOnStopAdditions>
+
+  <gameActivityOnDestroyAdditions>
+    <insert>
+    </insert>
+  </gameActivityOnDestroyAdditions>
+
+  <gameActivityOnActivityResultAdditions>
+
+  </gameActivityOnActivityResultAdditions>
+
+</root>
