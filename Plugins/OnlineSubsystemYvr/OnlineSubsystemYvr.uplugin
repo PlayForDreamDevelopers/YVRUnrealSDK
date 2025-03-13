@@ -10,11 +10,15 @@
 	"DocsURL": "https://developer.yvrdream.com/yvrdoc/unreal/manual/Introduction.html",
 	"MarketplaceURL": "",
 	"SupportURL": "http://developer.yvrdream.com/",
-	"EnabledByDefault": true,
+	"EngineVersion": "5.4.0",
+	"EnabledByDefault": false,
 	"CanContainContent": true,
 	"IsBetaVersion": false,
-	"IsExperimentalVersion": false,
-	"Installed": true,
+	"Installed": false,
+	"SupportedTargetPlatforms": [
+	"Win64",
+	"Android"
+	],
 	"Modules": [
 		{
 			"Name": "OnlineSubsystemYvr",

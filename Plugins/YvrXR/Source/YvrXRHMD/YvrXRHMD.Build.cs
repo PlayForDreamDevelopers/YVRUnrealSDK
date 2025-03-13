@@ -45,13 +45,15 @@ namespace UnrealBuildTool.Rules
                     "BuildSettings",
                     "InputCore",
 					"RHI",
-					"RenderCore",
+                    "RHICore",
+                    "RenderCore",
 					"Renderer",
                     "Slate",
                     "SlateCore",
 					"ProceduralMeshComponent",
 					"Projects",
-				}
+                    "XRBase",
+                }
 			);
 
 			PublicIncludePathModuleNames.AddRange(
@@ -59,7 +61,9 @@ namespace UnrealBuildTool.Rules
 			   {
 					"Launch",
 					"ProceduralMeshComponent",
-			   }
+                    "XRBase",
+                    "RHICore",
+               }
 		    );
 
 			if (Target.bBuildEditor == true)

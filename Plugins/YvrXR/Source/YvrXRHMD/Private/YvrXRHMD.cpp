@@ -32,6 +32,7 @@
 #include "PixelShaderUtils.h"
 #include "ScreenRendering.h"
 #include "Interfaces/IPluginManager.h"
+#include "DataDrivenShaderPlatformInfo.h"
 
 #if PLATFORM_ANDROID
 #include <android_native_app_glue.h>
@@ -1134,10 +1135,10 @@ void FYvrXRHMD::SetTrackingOrigin(EHMDTrackingOrigin::Type NewOrigin)
 {
 	switch (NewOrigin)
 	{
-	case EHMDTrackingOrigin::Eye:
+	case EHMDTrackingOrigin::Local:
 		TrackingSpaceType = XR_REFERENCE_SPACE_TYPE_LOCAL;
 		break;
-	case EHMDTrackingOrigin::Floor:
+	case EHMDTrackingOrigin::LocalFloor:
 		TrackingSpaceType = XR_REFERENCE_SPACE_TYPE_LOCAL_FLOOR_EXT;
 		break;
 	case EHMDTrackingOrigin::Stage:
@@ -1151,14 +1152,14 @@ void FYvrXRHMD::SetTrackingOrigin(EHMDTrackingOrigin::Type NewOrigin)
 
 EHMDTrackingOrigin::Type FYvrXRHMD::GetTrackingOrigin() const
 {
-	EHMDTrackingOrigin::Type TrackingOrigin = EHMDTrackingOrigin::Eye;
+	EHMDTrackingOrigin::Type TrackingOrigin = EHMDTrackingOrigin::Local;
 	switch (TrackingSpaceType)
 	{
 	case XR_REFERENCE_SPACE_TYPE_LOCAL:
-		TrackingOrigin = EHMDTrackingOrigin::Eye;
+		TrackingOrigin = EHMDTrackingOrigin::Local;
 		break;
 	case XR_REFERENCE_SPACE_TYPE_LOCAL_FLOOR_EXT:
-		TrackingOrigin = EHMDTrackingOrigin::Floor;
+		TrackingOrigin = EHMDTrackingOrigin::LocalFloor;
 		break;
 	case XR_REFERENCE_SPACE_TYPE_STAGE:
 		TrackingOrigin = EHMDTrackingOrigin::Stage;

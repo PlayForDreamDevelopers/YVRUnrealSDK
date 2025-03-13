@@ -1,5 +1,6 @@
 #include "OnlineIdentityYvr.h"
 #include "OnlineSubsystemYvrWrapper.h"
+#include "OnlineError.h"
 
 bool FUserOnlineAccountYvr::GetUserAttribute(const FString& AttrName, FString& OutAttrValue) const
 {
@@ -243,7 +244,7 @@ void FOnlineIdentityYvr::RevokeAuthToken(const FUniqueNetId& UserId, const FOnRe
 	});
 }
 
-void FOnlineIdentityYvr::GetUserPrivilege(const FUniqueNetId& UserId, EUserPrivileges::Type Privilege, const FOnGetUserPrivilegeCompleteDelegate& Delegate)
+void FOnlineIdentityYvr::GetUserPrivilege(const FUniqueNetId& UserId, EUserPrivileges::Type Privilege, const FOnGetUserPrivilegeCompleteDelegate& Delegate, EShowPrivilegeResolveUI ShowResolveUI = EShowPrivilegeResolveUI::Default)
 {
 #if PLATFORM_ANDROID
 	// Check for entitlement
@@ -285,7 +286,7 @@ FPlatformUserId FOnlineIdentityYvr::GetPlatformUserIdFromUniqueNetId(const FUniq
 		auto CurrentUniqueId = GetUniquePlayerId(i);
 		if (CurrentUniqueId.IsValid() && (*CurrentUniqueId == UniqueNetId))
 		{
-			return i;
+			return GetPlatformUserIdFromLocalUserNum(i);
 		}
 	}
 

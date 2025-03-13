@@ -6,6 +6,7 @@
 #include "Interfaces/OnlineFriendsInterface.h"
 #include "Interfaces/OnlinePresenceInterface.h"
 #include "OnlineSubsystemYvrTypesPrivate.h"
+#include "OnlineSubsystemYvrWrapper.h"
 
 class FOnlineYvrFriend : public FOnlineFriend
 {
