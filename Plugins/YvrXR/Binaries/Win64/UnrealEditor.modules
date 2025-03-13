@@ -1,0 +1,10 @@
+{
+	"BuildId": "27405482",
+	"Modules": 
+	{
+		"YvrXREditor": "UnrealEditor-YvrXREditor.dll",
+		"YvrXRHMD": "UnrealEditor-YvrXRHMD.dll",
+		"YvrXRInput": "UnrealEditor-YvrXRInput.dll",
+		"YvrXRMR": "UnrealEditor-YvrXRMR.dll"
+	}
+}

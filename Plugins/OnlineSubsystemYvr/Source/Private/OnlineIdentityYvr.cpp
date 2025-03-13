@@ -285,7 +285,7 @@ FPlatformUserId FOnlineIdentityYvr::GetPlatformUserIdFromUniqueNetId(const FUniq
 		auto CurrentUniqueId = GetUniquePlayerId(i);
 		if (CurrentUniqueId.IsValid() && (*CurrentUniqueId == UniqueNetId))
 		{
-			return i;
+			return GetPlatformUserIdFromLocalUserNum(i);
 		}
 	}
 

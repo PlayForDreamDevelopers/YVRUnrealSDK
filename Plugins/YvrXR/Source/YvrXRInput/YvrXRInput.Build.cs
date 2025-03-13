@@ -31,8 +31,16 @@ namespace UnrealBuildTool.Rules
                     "InputCore",
                     "HeadMountedDisplay",
                     "YvrXRHMD",
+                    "XRBase",
                 }
                 );
+
+            PublicIncludePathModuleNames.AddRange(
+               new string[]
+               {
+                    "XRBase",
+               }
+            );
 
             //AddEngineThirdPartyPrivateStaticDependencies(Target, "OpenXR");
 
