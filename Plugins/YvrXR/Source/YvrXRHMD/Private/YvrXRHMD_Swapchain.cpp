@@ -37,9 +37,10 @@ void FYvrXRSwapchain::IncrementSwapChainIndex_RHIThread()
 	XrSwapchainImageAcquireInfo Info;
 	Info.type = XR_TYPE_SWAPCHAIN_IMAGE_ACQUIRE_INFO;
 	Info.next = nullptr;
-	XR_ENSURE(xrAcquireSwapchainImage(Handle, &Info, &SwapChainIndex_RHIThread));
+	uint32_t SwapChainIndex = 0;
+	XR_ENSURE(xrAcquireSwapchainImage(Handle, &Info, &SwapChainIndex));
 
-	GDynamicRHI->RHIAliasTextureResources((FTextureRHIRef&)RHITexture, (FTextureRHIRef&)RHITextureSwapChain[SwapChainIndex_RHIThread]);
+	GDynamicRHI->RHIAliasTextureResources((FTextureRHIRef&)RHITexture, (FTextureRHIRef&)RHITextureSwapChain[SwapChainIndex]);
 	Acquired = true;
 }
 
@@ -61,7 +62,7 @@ void FYvrXRSwapchain::WaitCurrentImage_RHIThread(int64 Timeout)
 		XR_ENSURE(WaitResult = xrWaitSwapchainImage(Handle, &WaitInfo));
 		if (WaitResult == XR_TIMEOUT_EXPIRED) //-V547
 		{
-			UE_LOG(LogHMD, Warning, TEXT("Timed out waiting on swapchain image %u! Attempts remaining %d."), SwapChainIndex_RHIThread, RetryCount);
+			UE_LOG(LogHMD, Warning, TEXT("Timed out waiting on swapchain image %u! Attempts remaining %d."), SwapChainIndex_RHIThread.load(), RetryCount);
 		}
 	} while (WaitResult == XR_TIMEOUT_EXPIRED && RetryCount-- > 0);
 
@@ -297,13 +298,13 @@ FTextureRHIRef CreateTexture_OpenGL(uint32 InSizeX, uint32 InSizeY, EPixelFormat
 FXRSwapChainPtr CreateSwapchain_OpenGL(XrSession InSession, uint8 Format, uint32 SizeX, uint32 SizeY, uint32 ArraySize, uint32 NumMips, uint32 NumSamples, ETextureCreateFlags Flags, ETextureCreateFlags TargetableTextureFlags, const FClearValueBinding& ClearValueBinding, uint32 FaceCount)
 {
 	TFunction<uint32(uint8)> ToPlatformFormat = [](uint8 InFormat)
-	{
-		auto PlatformFormat = GOpenGLTextureFormats[InFormat];
+		{
+			auto PlatformFormat = GOpenGLTextureFormats[InFormat];
 
-		UE_LOG(LogHMD, Warning, TEXT("RequestedFormat %d PlatformFormat %d %d"), InFormat, PlatformFormat.InternalFormat[0], PlatformFormat.InternalFormat[1]);
+			UE_LOG(LogHMD, Warning, TEXT("RequestedFormat %d PlatformFormat %d %d"), InFormat, PlatformFormat.InternalFormat[0], PlatformFormat.InternalFormat[1]);
 
-		return PlatformFormat.InternalFormat[1] != 0 ? PlatformFormat.InternalFormat[1] : PlatformFormat.InternalFormat[0];
-	};
+			return PlatformFormat.InternalFormat[1] != 0 ? PlatformFormat.InternalFormat[1] : PlatformFormat.InternalFormat[0];
+		};
 
 	Format = FYvrXRSwapchain::GetNearestSupportedSwapchainFormat(InSession, Format, ToPlatformFormat);
 	if (!Format)
@@ -406,9 +407,9 @@ TArray<FXRSwapChainPtr> CreateSwapchainWithFoveation_Vulkan(XrSession InSession,
 	TArray<FXRSwapChainPtr> SwapchainArray;
 
 	TFunction<uint32(uint8)> ToPlatformFormat = [](uint8 InFormat)
-	{
-		return UEToVkTextureFormat(GPixelFormats[InFormat].UnrealFormat, true);
-	};
+		{
+			return UEToVkTextureFormat(GPixelFormats[InFormat].UnrealFormat, true);
+		};
 
 	Format = FYvrXRSwapchain::GetNearestSupportedSwapchainFormat(InSession, Format, ToPlatformFormat);
 

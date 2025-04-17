@@ -26,7 +26,7 @@ bool UYvrXRMRFunctionLibrary::YvrXRGetAnchorPoseByActor(AActor* BoundActor, FTra
 	return FYvrAnchorManager::GetInstance()->GetAnchorPose(AnchorComponent, OutTransform);
 }
 
-AActor* UYvrXRMRFunctionLibrary::YvrXRSpawnActorFromLoadResult(UObject* WorldContext, const FAnchorLoadResult& LoadResult, UClass* ActorClass)
+AActor* UYvrXRMRFunctionLibrary::YvrXRSpawnActorFromLoadResult(UObject* WorldContext, const FYvrAnchorLoadResult& LoadResult, UClass* ActorClass)
 {
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContext, EGetWorldErrorMode::ReturnNull);
 	if (!IsValid(World))

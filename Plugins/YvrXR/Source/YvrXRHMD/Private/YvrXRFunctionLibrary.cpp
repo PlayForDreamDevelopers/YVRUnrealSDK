@@ -164,6 +164,22 @@ void UYvrXRFunctionLibrary::SetSharpenType(EYvrLayerSharpenType SharpenType, boo
 	}
 }
 
+void UYvrXRFunctionLibrary::SetBackgroundLayerVisible(bool bIsVisible)
+{
+	FYvrXRHMD* YvrHMD = GetYvrHMD();
+	if (YvrHMD != nullptr)
+	{
+		if (bIsVisible)
+		{
+			YvrHMD->ShowBackgroundLayer();
+		}
+		else
+		{
+			YvrHMD->HideBackgroundLayer();
+		}
+	}
+}
+
 void UYvrXRFunctionLibrary::SetSpaceWarpEnabled(bool bIsEnabled)
 {
 	FYvrXRHMD* YvrHMD = GetYvrHMD();

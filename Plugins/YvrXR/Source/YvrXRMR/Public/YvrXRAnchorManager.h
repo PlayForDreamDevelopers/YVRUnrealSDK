@@ -14,7 +14,7 @@ DECLARE_DELEGATE_OneParam(FYvrSetSpaceComponentStatusDelegate, EYvrResult);
 DECLARE_DELEGATE_TwoParams(FYvrSaveAnchorEntityDelegate, EYvrResult, UYvrAnchorComponent*);
 DECLARE_DELEGATE_TwoParams(FYvrEraseAnchorEntityDelegate, EYvrResult, UYvrAnchorComponent*);
 //DECLARE_DELEGATE_OneParam(FYvrClearAnchorEntityDelegate, EYvrResult);
-DECLARE_DELEGATE_TwoParams(FYvrLoadAnchorEntityDelegate, EYvrResult, const TArray<FAnchorLoadResult>&);
+DECLARE_DELEGATE_TwoParams(FYvrLoadAnchorEntityDelegate, EYvrResult, const TArray<FYvrAnchorLoadResult>&);
 DECLARE_DELEGATE_OneParam(FYvrStartSpatialSceneCaptureDelegate, EYvrResult);
 
 class YVRXRMR_API FYvrAnchorManager
