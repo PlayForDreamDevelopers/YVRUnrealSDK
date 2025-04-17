@@ -1,6 +1,6 @@
 #include "YvrXRAnchorManager.h"
 #include "YvrXRAnchorComponent.h"
-#include "..\Public\YvrXRAnchorManager.h"
+#include "YvrXRAnchorManager.h"
 
 FYvrAnchorManager::FYvrAnchorManager()
 {
@@ -636,7 +636,7 @@ void FYvrAnchorManager::HandleLoadAnchorEntityEvent(uint64_t AsyncTaskId, XrResu
 		return;
 	}
 
-	TArray<FAnchorLoadResult> LoadedAnchors;
+	TArray<FYvrAnchorLoadResult> LoadedAnchors;
 
 	if (XR_FAILED(Result))
 	{

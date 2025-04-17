@@ -30,7 +30,7 @@ public:
 	static bool YvrXRGetAnchorPoseByActor(AActor* BoundActor, FTransform& OutTransform);
 
 	UFUNCTION(BlueprintCallable, Category = "YvrXRLibrary|MR", meta = (WorldContext = "WorldContext", UnsafeDuringActorConstruction = "true"))
-	static AActor* YvrXRSpawnActorFromLoadResult(UObject* WorldContext, const FAnchorLoadResult& LoadResult, UClass* ActorClass);
+	static AActor* YvrXRSpawnActorFromLoadResult(UObject* WorldContext, const FYvrAnchorLoadResult& LoadResult, UClass* ActorClass);
 
 	UFUNCTION(BlueprintPure, Category = "YvrXRLibrary|MR")
 	static bool YvrXRIsAnchorValidForActor(AActor* BoundActor);
@@ -58,5 +58,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "YvrXRLibrary|MR")
 	static bool YvrXRDestroyMeshDetector(UYvrXRSpaceMeshComponent* SpaceMeshComponent);
+
+	UFUNCTION(BlueprintCallable, Category = "YvrXRLibrary|MR")
+	static bool YvrXRSetMarkerEnabled(bool Enabled);
 
 };

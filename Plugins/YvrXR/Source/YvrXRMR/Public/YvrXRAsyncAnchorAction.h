@@ -19,7 +19,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FYvrSaveAnchorEntityActionFailure, E
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FYvrEraseAnchorEntityActionSuccess, EYvrResult, Result, UYvrAnchorComponent*, AnchorEntityComponent);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FYvrEraseAnchorEntityActionFailure, EYvrResult, Result);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FYvrLoadAnchorEntityActionSuccess, EYvrResult, Result, const TArray<FAnchorLoadResult>&, AnchorLoadResults);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FYvrLoadAnchorEntityActionSuccess, EYvrResult, Result, const TArray<FYvrAnchorLoadResult>&, AnchorLoadResults);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FYvrLoadAnchorEntityActionFailure, EYvrResult, Result);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FYvrStartSpatialSceneCaptureActionSuccess, EYvrResult, Result);
@@ -130,7 +130,7 @@ public:
 	FYvrAnchorLoadInfo LoadInfo;
 
 private:
-	void HandleLoadAnchorEntityComplete(EYvrResult Result, const TArray<FAnchorLoadResult>& AnchorLoadResults);
+	void HandleLoadAnchorEntityComplete(EYvrResult Result, const TArray<FYvrAnchorLoadResult>& AnchorLoadResults);
 };
 
 //////////////////////////////////////////////////////////////////////////

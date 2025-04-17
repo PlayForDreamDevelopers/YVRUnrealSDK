@@ -208,7 +208,7 @@ UYvrLoadAnchorEntity_AsyncAction* UYvrLoadAnchorEntity_AsyncAction::YvrXRLoadAnc
 	return Action;
 }
 
-void UYvrLoadAnchorEntity_AsyncAction::HandleLoadAnchorEntityComplete(EYvrResult Result, const TArray<FAnchorLoadResult>& AnchorLoadResults)
+void UYvrLoadAnchorEntity_AsyncAction::HandleLoadAnchorEntityComplete(EYvrResult Result, const TArray<FYvrAnchorLoadResult>& AnchorLoadResults)
 {
 	if (YVRXR_SUCCESS(Result))
 	{
