@@ -2079,7 +2079,8 @@ bool FYvrXRHMD::AllocateRenderTargetTexture(uint32 Index, uint32 SizeX, uint32 S
 
 	bNeedReAllocatedDepth = bDepthExtensionSupported;
 	bNeedReAllocatedMotionVector = bEnableSpaceWarp;
-	bNeedReAllocatedFoveation = true;
+	//Fixme: vulkan ffr memery leak, disable first
+	bNeedReAllocatedFoveation = false;
 
 	return true;
 }
