@@ -55,9 +55,9 @@ void FYvrXRMarkerManager::PollEvent(XrEventDataBuffer EventData)
         {
             XrSpaceLocation location{ XR_TYPE_SPACE_LOCATION };
 
+            XR_ENSURE(xrLocateSpace(markers[id].space, YvrXRHMD->GetTrackingSpace(), YvrXRHMD->GetDisplayTime(), &location));
             // Fixme
-            // XR_ENSURE(xrLocateSpace(markers[id].space, YvrXRHMD->GetTrackingSpace(), YvrXRHMD->GetDisplayTime(), &location));
-            if (location.locationFlags & XR_SPACE_LOCATION_POSITION_TRACKED_BIT)
+            // if (location.locationFlags & XR_SPACE_LOCATION_POSITION_TRACKED_BIT)
             {
                 FTransform markerTransform{};
                 const XrPosef& pose = location.pose;
