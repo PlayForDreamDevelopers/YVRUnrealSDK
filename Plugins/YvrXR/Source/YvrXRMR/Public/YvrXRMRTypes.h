@@ -255,7 +255,7 @@ struct YVRXRMR_API FYvrAnchorLoadInfo
 };
 
 USTRUCT(BlueprintType)
-struct YVRXRMR_API FAnchorLoadResult
+struct YVRXRMR_API FYvrAnchorLoadResult
 {
 	GENERATED_BODY()
 

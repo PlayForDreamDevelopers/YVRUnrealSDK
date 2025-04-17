@@ -11,23 +11,23 @@ struct FVSTCameraFrameItem
 {
 	GENERATED_USTRUCT_BODY()
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int32 FrameNumber;
+	int32 FrameNumber = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int32 Width;
+	int32 Width = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int32 Height;
+	int32 Height = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int32 Format;
+	int32 Format = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int32 ExposureDuration;
+	int32 ExposureDuration = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int64 SoeTimestamp;
+	int64 SoeTimestamp = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int64 SoeTimestampQ;
+	int64 SoeTimestampQ = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int32 Gain;
+	int32 Gain = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int32 DataSize;
+	int32 DataSize = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
 	TArray<uint8> LeftEyeData;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
@@ -39,24 +39,24 @@ struct FYvrPose
 {
 	GENERATED_USTRUCT_BODY()
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	int64 Timestamp;
+	int64 Timestamp = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FVector Position;
+	FVector Position = FVector::ZeroVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FQuat Rotation;
+	FQuat Rotation = FQuat::Identity;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	uint8 Confidence;
+	uint8 Confidence = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	uint8 WarningFlag;
+	uint8 WarningFlag = 0;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FVector LinearVelocity;
+	FVector LinearVelocity = FVector::ZeroVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FVector LinearAcceleration;
+	FVector LinearAcceleration = FVector::ZeroVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FVector AngularVelocity;
+	FVector AngularVelocity = FVector::ZeroVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FVector AngularAcceleration;
-	
+	FVector AngularAcceleration = FVector::ZeroVector;
+
 };
 
 USTRUCT(BlueprintType)
@@ -115,13 +115,13 @@ struct FVSTCameraIntrinsicExtrinsic
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FVector2D FocalLength;
+	FVector2D FocalLength = FVector2D::ZeroVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FVector2D PrincipalPoint;
+	FVector2D PrincipalPoint = FVector2D::ZeroVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FVector Position;
+	FVector Position = FVector::ZeroVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
-	FQuat Rotation;
+	FQuat Rotation = FQuat::Identity;
 };
 
 UCLASS()

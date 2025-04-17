@@ -513,6 +513,7 @@ bool FYvrXRHMDPlugin::GetOptionalExtensions(TArray<const ANSICHAR*>& OutExtensio
 
 	OutExtensions.Add(XR_YVR_SPATIAL_ENTITY_MESH_EXTENSION_NAME);
 	OutExtensions.Add(XR_META_SPATIAL_ENTITY_MESH_EXTENSION_NAME);
+	OutExtensions.Add(XR_VARJO_MARKER_TRACKING_EXTENSION_NAME);
 
 	return true;
 }
@@ -1690,14 +1691,6 @@ bool FYvrXRHMD::OnStereoStartup()
 		RenderBridge->SetOpenXRHMD(this);
 	}
 
-	// Set color space linear when using mobile hdr
-	if(bIsMobileHDREnabled)
-	{
-		PFN_xrSetColorSpaceYVR SetColorSpaceYVR;
-		XR_ENSURE(xrGetInstanceProcAddr(Instance, "xrSetColorSpaceYVR", (PFN_xrVoidFunction*)&SetColorSpaceYVR));
-		XR_ENSURE(SetColorSpaceYVR(Session, XrColorSpaceYVR::XR_COLOR_SPACE_Linear_YVR));
-	}
-
 	// grab a pointer to the renderer module for displaying our mirror window
 	static const FName RendererModuleName("Renderer");
 	RendererModule = FModuleManager::GetModulePtr<IRendererModule>(RendererModuleName);
@@ -2833,13 +2826,12 @@ void FYvrXRHMD::OnFinishRendering_RHIThread()
 					Projection->type = XR_TYPE_COMPOSITION_LAYER_PROJECTION;
 					Projection->next = nullptr;
 					Projection->layerFlags = XR_COMPOSITION_LAYER_BLEND_TEXTURE_SOURCE_ALPHA_BIT;
-#if ENGINE_MAJOR_VERSION > 4
-					Projection->layerFlags |= XR_COMPOSITION_LAYER_INVERTED_ALPHA_BIT_EXT;
-#endif
 					if (!bIsMobileHDREnabled)
 					{
 #if ENGINE_MAJOR_VERSION < 5
 						Projection->layerFlags |= XR_COMPOSITION_LAYER_UNPREMULTIPLIED_ALPHA_BIT;
+#else
+						Projection->layerFlags |= XR_COMPOSITION_LAYER_INVERTED_ALPHA_BIT_EXT;
 #endif
 					}
 					Projection->space = PipelinedFrameStateRHI.TrackingSpace->Handle;

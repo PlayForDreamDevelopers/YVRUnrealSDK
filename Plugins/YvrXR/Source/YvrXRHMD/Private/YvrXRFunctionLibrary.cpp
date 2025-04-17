@@ -181,3 +181,19 @@ void UYvrXRFunctionLibrary::SetSeeThroughBackgroundEnabled(bool bIsEnabled)
 		YvrHMD->SetSeeThroughBackgroundEnabled(bIsEnabled);
 	}
 }
+
+void UYvrXRFunctionLibrary::SetBackgroundLayerVisible(bool bIsVisible)
+{
+	FYvrXRHMD* YvrHMD = GetYvrHMD();
+	if (YvrHMD != nullptr)
+	{
+		if (bIsVisible)
+		{
+			YvrHMD->ShowBackgroundLayer();
+		}
+		else
+		{
+			YvrHMD->HideBackgroundLayer();
+		}
+	}
+}

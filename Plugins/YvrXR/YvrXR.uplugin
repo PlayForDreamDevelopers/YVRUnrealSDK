@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "3.0.0",
+	"VersionName": "3.1.0",
 	"FriendlyName": "YVR XR",
 	"Description": "YvrXR is an YVR OpenXR implementation",
 	"Category": "Virtual Reality",

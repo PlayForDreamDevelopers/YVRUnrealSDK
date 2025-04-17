@@ -1,8 +1,8 @@
 #include "YvrXRMRFunctionLibrary.h"
-#include "YvrXRAnchorManager.h"
-#include "..\Public\YvrXRMRFunctionLibrary.h"
 
-#include "YvrXrSpaceMeshManager.h"
+#include "YvrXRAnchorManager.h"
+#include "YvrXRSpaceMeshManager.h"
+#include "YvrXRMarkerManager.h"
 
 
 bool UYvrXRMRFunctionLibrary::YvrXRGetAnchorEntityUuid(AActor* BoundActor, FYvrAnchorUUID& OutAnchorUUID)
@@ -26,7 +26,7 @@ bool UYvrXRMRFunctionLibrary::YvrXRGetAnchorPoseByActor(AActor* BoundActor, FTra
 	return FYvrAnchorManager::GetInstance()->GetAnchorPose(AnchorComponent, OutTransform);
 }
 
-AActor* UYvrXRMRFunctionLibrary::YvrXRSpawnActorFromLoadResult(UObject* WorldContext, const FAnchorLoadResult& LoadResult, UClass* ActorClass)
+AActor* UYvrXRMRFunctionLibrary::YvrXRSpawnActorFromLoadResult(UObject* WorldContext, const FYvrAnchorLoadResult& LoadResult, UClass* ActorClass)
 {
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContext, EGetWorldErrorMode::ReturnNull);
 	if (!IsValid(World))
@@ -124,4 +124,9 @@ bool UYvrXRMRFunctionLibrary::YvrXRCreateMeshDetector(UYvrXRSpaceMeshComponent* 
 bool UYvrXRMRFunctionLibrary::YvrXRDestroyMeshDetector(UYvrXRSpaceMeshComponent* SpaceMeshComponent)
 {
 	return FYvrXRSpaceMeshManager::GetInstance()->DestroyMeshDetector(SpaceMeshComponent);
+}
+
+bool UYvrXRMRFunctionLibrary::YvrXRSetMarkerEnabled(bool Enabled)
+{
+	return FYvrXRMarkerManager::GetInstance()->SetYvrMarkerEnabled(Enabled);
 }

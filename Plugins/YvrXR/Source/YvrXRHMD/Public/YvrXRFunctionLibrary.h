@@ -107,6 +107,9 @@ class YVRXRHMD_API UYvrXRFunctionLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
 	static void SetSharpenType(EYvrLayerSharpenType SharpenType, bool bApplyToAllLayers = false);
 
+	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
+	static void SetBackgroundLayerVisible(bool bIsVisible);
+
 protected:
 	static class FYvrXRHMD* GetYvrHMD();
 };
