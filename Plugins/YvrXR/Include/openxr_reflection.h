@@ -2,7 +2,7 @@
 #define OPENXR_REFLECTION_H_ 1
 
 /*
-** Copyright (c) 2017-2024, The Khronos Group Inc.
+** Copyright (c) 2017-2025 The Khronos Group Inc.
 **
 ** SPDX-License-Identifier: Apache-2.0 OR MIT
 */
@@ -153,6 +153,12 @@ XR_ENUM_STR(XrResult);
     _(XR_ERROR_SYSTEM_NOTIFICATION_INCOMPATIBLE_SKU_ML, -1000473001) \
     _(XR_ERROR_WORLD_MESH_DETECTOR_PERMISSION_DENIED_ML, -1000474000) \
     _(XR_ERROR_WORLD_MESH_DETECTOR_SPACE_NOT_LOCATABLE_ML, -1000474001) \
+    _(XR_ERROR_FACIAL_EXPRESSION_PERMISSION_DENIED_ML, 1000482000) \
+    _(XR_ERROR_COLOCATION_DISCOVERY_NETWORK_FAILED_META, -1000571001) \
+    _(XR_ERROR_COLOCATION_DISCOVERY_NO_DISCOVERY_METHOD_META, -1000571002) \
+    _(XR_COLOCATION_DISCOVERY_ALREADY_ADVERTISING_META, 1000571003) \
+    _(XR_COLOCATION_DISCOVERY_ALREADY_DISCOVERING_META, 1000571004) \
+    _(XR_ERROR_SPACE_GROUP_NOT_FOUND_META, -1000572002) \
     _(XR_RESULT_MAX_ENUM, 0x7FFFFFFF)
 
 #define XR_LIST_ENUM_XrStructureType(_) \
@@ -454,6 +460,8 @@ XR_ENUM_STR(XrResult);
     _(XR_TYPE_COMPOSITION_LAYER_SETTINGS_FB, 1000204000) \
     _(XR_TYPE_HAPTIC_PCM_VIBRATION_FB, 1000209001) \
     _(XR_TYPE_DEVICE_PCM_SAMPLE_RATE_STATE_FB, 1000209002) \
+    _(XR_TYPE_FRAME_SYNTHESIS_INFO_EXT, 1000211000) \
+    _(XR_TYPE_FRAME_SYNTHESIS_CONFIG_VIEW_EXT, 1000211001) \
     _(XR_TYPE_COMPOSITION_LAYER_DEPTH_TEST_FB, 1000212000) \
     _(XR_TYPE_LOCAL_DIMMING_FRAME_END_INFO_META, 1000216000) \
     _(XR_TYPE_PASSTHROUGH_PREFERENCES_META, 1000217000) \
@@ -489,10 +497,14 @@ XR_ENUM_STR(XrResult);
     _(XR_TYPE_PASSTHROUGH_COLOR_MAP_INTERPOLATED_LUT_META, 1000266101) \
     _(XR_TYPE_SPACE_TRIANGLE_MESH_GET_INFO_META, 1000269001) \
     _(XR_TYPE_SPACE_TRIANGLE_MESH_META, 1000269002) \
+    _(XR_TYPE_EVENT_DATA_PASSTHROUGH_LAYER_RESUMED_META, 1000282000) \
     _(XR_TYPE_SYSTEM_FACE_TRACKING_PROPERTIES2_FB, 1000287013) \
     _(XR_TYPE_FACE_TRACKER_CREATE_INFO2_FB, 1000287014) \
     _(XR_TYPE_FACE_EXPRESSION_INFO2_FB, 1000287015) \
     _(XR_TYPE_FACE_EXPRESSION_WEIGHTS2_FB, 1000287016) \
+    _(XR_TYPE_SYSTEM_SPATIAL_ENTITY_SHARING_PROPERTIES_META, 1000290000) \
+    _(XR_TYPE_SHARE_SPACES_INFO_META, 1000290001) \
+    _(XR_TYPE_EVENT_DATA_SHARE_SPACES_COMPLETE_META, 1000290002) \
     _(XR_TYPE_ENVIRONMENT_DEPTH_PROVIDER_CREATE_INFO_META, 1000291000) \
     _(XR_TYPE_ENVIRONMENT_DEPTH_SWAPCHAIN_CREATE_INFO_META, 1000291001) \
     _(XR_TYPE_ENVIRONMENT_DEPTH_SWAPCHAIN_STATE_META, 1000291002) \
@@ -518,6 +530,10 @@ XR_ENUM_STR(XrResult);
     _(XR_TYPE_ACTIVE_ACTION_SET_PRIORITIES_EXT, 1000373000) \
     _(XR_TYPE_SYSTEM_FORCE_FEEDBACK_CURL_PROPERTIES_MNDX, 1000375000) \
     _(XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX, 1000375001) \
+    _(XR_TYPE_BODY_TRACKER_CREATE_INFO_BD, 1000385001) \
+    _(XR_TYPE_BODY_JOINTS_LOCATE_INFO_BD, 1000385002) \
+    _(XR_TYPE_BODY_JOINT_LOCATIONS_BD, 1000385003) \
+    _(XR_TYPE_SYSTEM_BODY_TRACKING_PROPERTIES_BD, 1000385004) \
     _(XR_TYPE_HAND_TRACKING_DATA_SOURCE_INFO_EXT, 1000428000) \
     _(XR_TYPE_HAND_TRACKING_DATA_SOURCE_STATE_EXT, 1000428001) \
     _(XR_TYPE_PLANE_DETECTOR_CREATE_INFO_EXT, 1000429001) \
@@ -546,6 +562,25 @@ XR_ENUM_STR(XrResult);
     _(XR_TYPE_WORLD_MESH_BLOCK_ML, 1000474010) \
     _(XR_TYPE_WORLD_MESH_REQUEST_COMPLETION_ML, 1000474011) \
     _(XR_TYPE_WORLD_MESH_REQUEST_COMPLETION_INFO_ML, 1000474012) \
+    _(XR_TYPE_SYSTEM_FACIAL_EXPRESSION_PROPERTIES_ML, 1000482004) \
+    _(XR_TYPE_FACIAL_EXPRESSION_CLIENT_CREATE_INFO_ML, 1000482005) \
+    _(XR_TYPE_FACIAL_EXPRESSION_BLEND_SHAPE_GET_INFO_ML, 1000482006) \
+    _(XR_TYPE_FACIAL_EXPRESSION_BLEND_SHAPE_PROPERTIES_ML, 1000482007) \
+    _(XR_TYPE_COLOCATION_DISCOVERY_START_INFO_META, 1000571010) \
+    _(XR_TYPE_COLOCATION_DISCOVERY_STOP_INFO_META, 1000571011) \
+    _(XR_TYPE_COLOCATION_ADVERTISEMENT_START_INFO_META, 1000571012) \
+    _(XR_TYPE_COLOCATION_ADVERTISEMENT_STOP_INFO_META, 1000571013) \
+    _(XR_TYPE_EVENT_DATA_START_COLOCATION_ADVERTISEMENT_COMPLETE_META, 1000571020) \
+    _(XR_TYPE_EVENT_DATA_STOP_COLOCATION_ADVERTISEMENT_COMPLETE_META, 1000571021) \
+    _(XR_TYPE_EVENT_DATA_COLOCATION_ADVERTISEMENT_COMPLETE_META, 1000571022) \
+    _(XR_TYPE_EVENT_DATA_START_COLOCATION_DISCOVERY_COMPLETE_META, 1000571023) \
+    _(XR_TYPE_EVENT_DATA_COLOCATION_DISCOVERY_RESULT_META, 1000571024) \
+    _(XR_TYPE_EVENT_DATA_COLOCATION_DISCOVERY_COMPLETE_META, 1000571025) \
+    _(XR_TYPE_EVENT_DATA_STOP_COLOCATION_DISCOVERY_COMPLETE_META, 1000571026) \
+    _(XR_TYPE_SYSTEM_COLOCATION_DISCOVERY_PROPERTIES_META, 1000571030) \
+    _(XR_TYPE_SHARE_SPACES_RECIPIENT_GROUPS_META, 1000572000) \
+    _(XR_TYPE_SPACE_GROUP_UUID_FILTER_INFO_META, 1000572001) \
+    _(XR_TYPE_SYSTEM_SPATIAL_ENTITY_GROUP_SHARING_PROPERTIES_META, 1000572100) \
     _(XR_STRUCTURE_TYPE_MAX_ENUM, 0x7FFFFFFF)
 
 #define XR_LIST_ENUM_XrFormFactor(_) \
@@ -637,8 +672,10 @@ XR_ENUM_STR(XrResult);
     _(XR_OBJECT_TYPE_ENVIRONMENT_DEPTH_SWAPCHAIN_META, 1000291001) \
     _(XR_OBJECT_TYPE_PASSTHROUGH_HTC, 1000317000) \
     _(XR_OBJECT_TYPE_BODY_TRACKER_HTC, 1000320000) \
+    _(XR_OBJECT_TYPE_BODY_TRACKER_BD, 1000385000) \
     _(XR_OBJECT_TYPE_PLANE_DETECTOR_EXT, 1000429000) \
     _(XR_OBJECT_TYPE_WORLD_MESH_DETECTOR_ML, 1000474000) \
+    _(XR_OBJECT_TYPE_FACIAL_EXPRESSION_CLIENT_ML, 1000482000) \
     _(XR_OBJECT_TYPE_MAX_ENUM, 0x7FFFFFFF)
 
 #define XR_LIST_ENUM_XrLoaderInterfaceStructs(_) \
@@ -1465,6 +1502,38 @@ XR_ENUM_STR(XrResult);
     _(XR_FORCE_FEEDBACK_CURL_LOCATION_LITTLE_CURL_MNDX, 4) \
     _(XR_FORCE_FEEDBACK_CURL_LOCATION_MAX_ENUM_MNDX, 0x7FFFFFFF)
 
+#define XR_LIST_ENUM_XrBodyJointBD(_) \
+    _(XR_BODY_JOINT_PELVIS_BD, 0) \
+    _(XR_BODY_JOINT_LEFT_HIP_BD, 1) \
+    _(XR_BODY_JOINT_RIGHT_HIP_BD, 2) \
+    _(XR_BODY_JOINT_SPINE1_BD, 3) \
+    _(XR_BODY_JOINT_LEFT_KNEE_BD, 4) \
+    _(XR_BODY_JOINT_RIGHT_KNEE_BD, 5) \
+    _(XR_BODY_JOINT_SPINE2_BD, 6) \
+    _(XR_BODY_JOINT_LEFT_ANKLE_BD, 7) \
+    _(XR_BODY_JOINT_RIGHT_ANKLE_BD, 8) \
+    _(XR_BODY_JOINT_SPINE3_BD, 9) \
+    _(XR_BODY_JOINT_LEFT_FOOT_BD, 10) \
+    _(XR_BODY_JOINT_RIGHT_FOOT_BD, 11) \
+    _(XR_BODY_JOINT_NECK_BD, 12) \
+    _(XR_BODY_JOINT_LEFT_COLLAR_BD, 13) \
+    _(XR_BODY_JOINT_RIGHT_COLLAR_BD, 14) \
+    _(XR_BODY_JOINT_HEAD_BD, 15) \
+    _(XR_BODY_JOINT_LEFT_SHOULDER_BD, 16) \
+    _(XR_BODY_JOINT_RIGHT_SHOULDER_BD, 17) \
+    _(XR_BODY_JOINT_LEFT_ELBOW_BD, 18) \
+    _(XR_BODY_JOINT_RIGHT_ELBOW_BD, 19) \
+    _(XR_BODY_JOINT_LEFT_WRIST_BD, 20) \
+    _(XR_BODY_JOINT_RIGHT_WRIST_BD, 21) \
+    _(XR_BODY_JOINT_LEFT_HAND_BD, 22) \
+    _(XR_BODY_JOINT_RIGHT_HAND_BD, 23) \
+    _(XR_BODY_JOINT_MAX_ENUM_BD, 0x7FFFFFFF)
+
+#define XR_LIST_ENUM_XrBodyJointSetBD(_) \
+    _(XR_BODY_JOINT_SET_BODY_WITHOUT_ARM_BD, 1) \
+    _(XR_BODY_JOINT_SET_FULL_BODY_JOINTS_BD, 2) \
+    _(XR_BODY_JOINT_SET_MAX_ENUM_BD, 0x7FFFFFFF)
+
 #define XR_LIST_ENUM_XrHandTrackingDataSourceEXT(_) \
     _(XR_HAND_TRACKING_DATA_SOURCE_UNOBSTRUCTED_EXT, 1) \
     _(XR_HAND_TRACKING_DATA_SOURCE_CONTROLLER_EXT, 2) \
@@ -1531,6 +1600,55 @@ XR_ENUM_STR(XrResult);
     _(XR_WORLD_MESH_BLOCK_RESULT_PENDING_ML, 2) \
     _(XR_WORLD_MESH_BLOCK_RESULT_PARTIAL_UPDATE_ML, 3) \
     _(XR_WORLD_MESH_BLOCK_RESULT_MAX_ENUM_ML, 0x7FFFFFFF)
+
+#define XR_LIST_ENUM_XrFacialBlendShapeML(_) \
+    _(XR_FACIAL_BLEND_SHAPE_BROW_LOWERER_L_ML, 0) \
+    _(XR_FACIAL_BLEND_SHAPE_BROW_LOWERER_R_ML, 1) \
+    _(XR_FACIAL_BLEND_SHAPE_CHEEK_RAISER_L_ML, 2) \
+    _(XR_FACIAL_BLEND_SHAPE_CHEEK_RAISER_R_ML, 3) \
+    _(XR_FACIAL_BLEND_SHAPE_CHIN_RAISER_ML, 4) \
+    _(XR_FACIAL_BLEND_SHAPE_DIMPLER_L_ML, 5) \
+    _(XR_FACIAL_BLEND_SHAPE_DIMPLER_R_ML, 6) \
+    _(XR_FACIAL_BLEND_SHAPE_EYES_CLOSED_L_ML, 7) \
+    _(XR_FACIAL_BLEND_SHAPE_EYES_CLOSED_R_ML, 8) \
+    _(XR_FACIAL_BLEND_SHAPE_INNER_BROW_RAISER_L_ML, 9) \
+    _(XR_FACIAL_BLEND_SHAPE_INNER_BROW_RAISER_R_ML, 10) \
+    _(XR_FACIAL_BLEND_SHAPE_JAW_DROP_ML, 11) \
+    _(XR_FACIAL_BLEND_SHAPE_LID_TIGHTENER_L_ML, 12) \
+    _(XR_FACIAL_BLEND_SHAPE_LID_TIGHTENER_R_ML, 13) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_CORNER_DEPRESSOR_L_ML, 14) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_CORNER_DEPRESSOR_R_ML, 15) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_CORNER_PULLER_L_ML, 16) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_CORNER_PULLER_R_ML, 17) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_FUNNELER_LB_ML, 18) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_FUNNELER_LT_ML, 19) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_FUNNELER_RB_ML, 20) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_FUNNELER_RT_ML, 21) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_PRESSOR_L_ML, 22) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_PRESSOR_R_ML, 23) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_PUCKER_L_ML, 24) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_PUCKER_R_ML, 25) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_STRETCHER_L_ML, 26) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_STRETCHER_R_ML, 27) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_SUCK_LB_ML, 28) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_SUCK_LT_ML, 29) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_SUCK_RB_ML, 30) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_SUCK_RT_ML, 31) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_TIGHTENER_L_ML, 32) \
+    _(XR_FACIAL_BLEND_SHAPE_LIP_TIGHTENER_R_ML, 33) \
+    _(XR_FACIAL_BLEND_SHAPE_LIPS_TOWARD_ML, 34) \
+    _(XR_FACIAL_BLEND_SHAPE_LOWER_LIP_DEPRESSOR_L_ML, 35) \
+    _(XR_FACIAL_BLEND_SHAPE_LOWER_LIP_DEPRESSOR_R_ML, 36) \
+    _(XR_FACIAL_BLEND_SHAPE_NOSE_WRINKLER_L_ML, 37) \
+    _(XR_FACIAL_BLEND_SHAPE_NOSE_WRINKLER_R_ML, 38) \
+    _(XR_FACIAL_BLEND_SHAPE_OUTER_BROW_RAISER_L_ML, 39) \
+    _(XR_FACIAL_BLEND_SHAPE_OUTER_BROW_RAISER_R_ML, 40) \
+    _(XR_FACIAL_BLEND_SHAPE_UPPER_LID_RAISER_L_ML, 41) \
+    _(XR_FACIAL_BLEND_SHAPE_UPPER_LID_RAISER_R_ML, 42) \
+    _(XR_FACIAL_BLEND_SHAPE_UPPER_LIP_RAISER_L_ML, 43) \
+    _(XR_FACIAL_BLEND_SHAPE_UPPER_LIP_RAISER_R_ML, 44) \
+    _(XR_FACIAL_BLEND_SHAPE_TONGUE_OUT_ML, 45) \
+    _(XR_FACIAL_BLEND_SHAPE_MAX_ENUM_ML, 0x7FFFFFFF)
 
 #define XR_LIST_BITS_XrInstanceCreateFlags(_)
 
@@ -1697,6 +1815,10 @@ XR_ENUM_STR(XrResult);
     _(XR_COMPOSITION_LAYER_SETTINGS_QUALITY_SHARPENING_BIT_FB, 0x00000008) \
     _(XR_COMPOSITION_LAYER_SETTINGS_AUTO_LAYER_FILTER_BIT_META, 0x00000020) \
 
+#define XR_LIST_BITS_XrFrameSynthesisInfoFlagsEXT(_) \
+    _(XR_FRAME_SYNTHESIS_INFO_USE_2D_MOTION_VECTOR_BIT_EXT, 0x00000001) \
+    _(XR_FRAME_SYNTHESIS_INFO_REQUEST_RELAXED_FRAME_INTERVAL_BIT_EXT, 0x00000002) \
+
 #define XR_LIST_BITS_XrPassthroughPreferenceFlagsMETA(_) \
     _(XR_PASSTHROUGH_PREFERENCE_DEFAULT_TO_ACTIVE_BIT_META, 0x00000001) \
 
@@ -1743,6 +1865,10 @@ XR_ENUM_STR(XrResult);
     _(XR_WORLD_MESH_DETECTOR_PLANARIZE_BIT_ML, 0x00000008) \
     _(XR_WORLD_MESH_DETECTOR_REMOVE_MESH_SKIRT_BIT_ML, 0x00000010) \
     _(XR_WORLD_MESH_DETECTOR_INDEX_ORDER_CW_BIT_ML, 0x00000020) \
+
+#define XR_LIST_BITS_XrFacialExpressionBlendShapePropertiesFlagsML(_) \
+    _(XR_FACIAL_EXPRESSION_BLEND_SHAPE_PROPERTIES_VALID_BIT_ML, 0x00000001) \
+    _(XR_FACIAL_EXPRESSION_BLEND_SHAPE_PROPERTIES_TRACKED_BIT_ML, 0x00000002) \
 
 /// Calls your macro with the name of each member of XrApiLayerProperties, in order.
 #define XR_LIST_STRUCT_XrApiLayerProperties(_) \
@@ -4409,6 +4535,28 @@ XR_ENUM_STR(XrResult);
     _(next) \
     _(sampleRate) \
 
+/// Calls your macro with the name of each member of XrFrameSynthesisInfoEXT, in order.
+#define XR_LIST_STRUCT_XrFrameSynthesisInfoEXT(_) \
+    _(type) \
+    _(next) \
+    _(layerFlags) \
+    _(motionVectorSubImage) \
+    _(motionVectorScale) \
+    _(motionVectorOffset) \
+    _(appSpaceDeltaPose) \
+    _(depthSubImage) \
+    _(minDepth) \
+    _(maxDepth) \
+    _(nearZ) \
+    _(farZ) \
+
+/// Calls your macro with the name of each member of XrFrameSynthesisConfigViewEXT, in order.
+#define XR_LIST_STRUCT_XrFrameSynthesisConfigViewEXT(_) \
+    _(type) \
+    _(next) \
+    _(recommendedMotionVectorImageRectWidth) \
+    _(recommendedMotionVectorImageRectHeight) \
+
 /// Calls your macro with the name of each member of XrCompositionLayerDepthTestFB, in order.
 #define XR_LIST_STRUCT_XrCompositionLayerDepthTestFB(_) \
     _(type) \
@@ -4675,6 +4823,12 @@ XR_ENUM_STR(XrResult);
     _(indexCountOutput) \
     _(indices) \
 
+/// Calls your macro with the name of each member of XrEventDataPassthroughLayerResumedMETA, in order.
+#define XR_LIST_STRUCT_XrEventDataPassthroughLayerResumedMETA(_) \
+    _(type) \
+    _(next) \
+    _(layer) \
+
 /// Calls your macro with the name of each member of XrSystemFaceTrackingProperties2FB, in order.
 #define XR_LIST_STRUCT_XrSystemFaceTrackingProperties2FB(_) \
     _(type) \
@@ -4708,6 +4862,32 @@ XR_ENUM_STR(XrResult);
     _(isEyeFollowingBlendshapesValid) \
     _(dataSource) \
     _(time) \
+
+/// Calls your macro with the name of each member of XrSystemSpatialEntitySharingPropertiesMETA, in order.
+#define XR_LIST_STRUCT_XrSystemSpatialEntitySharingPropertiesMETA(_) \
+    _(type) \
+    _(next) \
+    _(supportsSpatialEntitySharing) \
+
+/// Calls your macro with the name of each member of XrShareSpacesRecipientBaseHeaderMETA, in order.
+#define XR_LIST_STRUCT_XrShareSpacesRecipientBaseHeaderMETA(_) \
+    _(type) \
+    _(next) \
+
+/// Calls your macro with the name of each member of XrShareSpacesInfoMETA, in order.
+#define XR_LIST_STRUCT_XrShareSpacesInfoMETA(_) \
+    _(type) \
+    _(next) \
+    _(spaceCount) \
+    _(spaces) \
+    _(recipientInfo) \
+
+/// Calls your macro with the name of each member of XrEventDataShareSpacesCompleteMETA, in order.
+#define XR_LIST_STRUCT_XrEventDataShareSpacesCompleteMETA(_) \
+    _(type) \
+    _(next) \
+    _(requestId) \
+    _(result) \
 
 /// Calls your macro with the name of each member of XrEnvironmentDepthProviderCreateInfoMETA, in order.
 #define XR_LIST_STRUCT_XrEnvironmentDepthProviderCreateInfoMETA(_) \
@@ -4917,6 +5097,38 @@ XR_ENUM_STR(XrResult);
     _(next) \
     _(locationCount) \
     _(locations) \
+
+/// Calls your macro with the name of each member of XrSystemBodyTrackingPropertiesBD, in order.
+#define XR_LIST_STRUCT_XrSystemBodyTrackingPropertiesBD(_) \
+    _(type) \
+    _(next) \
+    _(supportsBodyTracking) \
+
+/// Calls your macro with the name of each member of XrBodyTrackerCreateInfoBD, in order.
+#define XR_LIST_STRUCT_XrBodyTrackerCreateInfoBD(_) \
+    _(type) \
+    _(next) \
+    _(jointSet) \
+
+/// Calls your macro with the name of each member of XrBodyJointsLocateInfoBD, in order.
+#define XR_LIST_STRUCT_XrBodyJointsLocateInfoBD(_) \
+    _(type) \
+    _(next) \
+    _(baseSpace) \
+    _(time) \
+
+/// Calls your macro with the name of each member of XrBodyJointLocationBD, in order.
+#define XR_LIST_STRUCT_XrBodyJointLocationBD(_) \
+    _(locationFlags) \
+    _(pose) \
+
+/// Calls your macro with the name of each member of XrBodyJointLocationsBD, in order.
+#define XR_LIST_STRUCT_XrBodyJointLocationsBD(_) \
+    _(type) \
+    _(next) \
+    _(allJointPosesTracked) \
+    _(jointLocationCount) \
+    _(jointLocations) \
 
 /// Calls your macro with the name of each member of XrHandTrackingDataSourceInfoEXT, in order.
 #define XR_LIST_STRUCT_XrHandTrackingDataSourceInfoEXT(_) \
@@ -5163,6 +5375,132 @@ XR_ENUM_STR(XrResult);
     _(futureResult) \
     _(blockCount) \
     _(blocks) \
+
+/// Calls your macro with the name of each member of XrSystemFacialExpressionPropertiesML, in order.
+#define XR_LIST_STRUCT_XrSystemFacialExpressionPropertiesML(_) \
+    _(type) \
+    _(next) \
+    _(supportsFacialExpression) \
+
+/// Calls your macro with the name of each member of XrFacialExpressionClientCreateInfoML, in order.
+#define XR_LIST_STRUCT_XrFacialExpressionClientCreateInfoML(_) \
+    _(type) \
+    _(next) \
+    _(requestedCount) \
+    _(requestedFacialBlendShapes) \
+
+/// Calls your macro with the name of each member of XrFacialExpressionBlendShapeGetInfoML, in order.
+#define XR_LIST_STRUCT_XrFacialExpressionBlendShapeGetInfoML(_) \
+    _(type) \
+    _(next) \
+
+/// Calls your macro with the name of each member of XrFacialExpressionBlendShapePropertiesML, in order.
+#define XR_LIST_STRUCT_XrFacialExpressionBlendShapePropertiesML(_) \
+    _(type) \
+    _(next) \
+    _(requestedFacialBlendShape) \
+    _(weight) \
+    _(flags) \
+    _(time) \
+
+/// Calls your macro with the name of each member of XrColocationDiscoveryStartInfoMETA, in order.
+#define XR_LIST_STRUCT_XrColocationDiscoveryStartInfoMETA(_) \
+    _(type) \
+    _(next) \
+
+/// Calls your macro with the name of each member of XrColocationDiscoveryStopInfoMETA, in order.
+#define XR_LIST_STRUCT_XrColocationDiscoveryStopInfoMETA(_) \
+    _(type) \
+    _(next) \
+
+/// Calls your macro with the name of each member of XrColocationAdvertisementStartInfoMETA, in order.
+#define XR_LIST_STRUCT_XrColocationAdvertisementStartInfoMETA(_) \
+    _(type) \
+    _(next) \
+    _(bufferSize) \
+    _(buffer) \
+
+/// Calls your macro with the name of each member of XrColocationAdvertisementStopInfoMETA, in order.
+#define XR_LIST_STRUCT_XrColocationAdvertisementStopInfoMETA(_) \
+    _(type) \
+    _(next) \
+
+/// Calls your macro with the name of each member of XrEventDataStartColocationAdvertisementCompleteMETA, in order.
+#define XR_LIST_STRUCT_XrEventDataStartColocationAdvertisementCompleteMETA(_) \
+    _(type) \
+    _(next) \
+    _(advertisementRequestId) \
+    _(result) \
+    _(advertisementUuid) \
+
+/// Calls your macro with the name of each member of XrEventDataStopColocationAdvertisementCompleteMETA, in order.
+#define XR_LIST_STRUCT_XrEventDataStopColocationAdvertisementCompleteMETA(_) \
+    _(type) \
+    _(next) \
+    _(requestId) \
+    _(result) \
+
+/// Calls your macro with the name of each member of XrEventDataColocationAdvertisementCompleteMETA, in order.
+#define XR_LIST_STRUCT_XrEventDataColocationAdvertisementCompleteMETA(_) \
+    _(type) \
+    _(next) \
+    _(advertisementRequestId) \
+    _(result) \
+
+/// Calls your macro with the name of each member of XrEventDataStartColocationDiscoveryCompleteMETA, in order.
+#define XR_LIST_STRUCT_XrEventDataStartColocationDiscoveryCompleteMETA(_) \
+    _(type) \
+    _(next) \
+    _(discoveryRequestId) \
+    _(result) \
+
+/// Calls your macro with the name of each member of XrEventDataColocationDiscoveryResultMETA, in order.
+#define XR_LIST_STRUCT_XrEventDataColocationDiscoveryResultMETA(_) \
+    _(type) \
+    _(next) \
+    _(discoveryRequestId) \
+    _(advertisementUuid) \
+    _(bufferSize) \
+    _(buffer) \
+
+/// Calls your macro with the name of each member of XrEventDataColocationDiscoveryCompleteMETA, in order.
+#define XR_LIST_STRUCT_XrEventDataColocationDiscoveryCompleteMETA(_) \
+    _(type) \
+    _(next) \
+    _(discoveryRequestId) \
+    _(result) \
+
+/// Calls your macro with the name of each member of XrEventDataStopColocationDiscoveryCompleteMETA, in order.
+#define XR_LIST_STRUCT_XrEventDataStopColocationDiscoveryCompleteMETA(_) \
+    _(type) \
+    _(next) \
+    _(requestId) \
+    _(result) \
+
+/// Calls your macro with the name of each member of XrSystemColocationDiscoveryPropertiesMETA, in order.
+#define XR_LIST_STRUCT_XrSystemColocationDiscoveryPropertiesMETA(_) \
+    _(type) \
+    _(next) \
+    _(supportsColocationDiscovery) \
+
+/// Calls your macro with the name of each member of XrSystemSpatialEntityGroupSharingPropertiesMETA, in order.
+#define XR_LIST_STRUCT_XrSystemSpatialEntityGroupSharingPropertiesMETA(_) \
+    _(type) \
+    _(next) \
+    _(supportsSpatialEntityGroupSharing) \
+
+/// Calls your macro with the name of each member of XrShareSpacesRecipientGroupsMETA, in order.
+#define XR_LIST_STRUCT_XrShareSpacesRecipientGroupsMETA(_) \
+    _(type) \
+    _(next) \
+    _(groupCount) \
+    _(groups) \
+
+/// Calls your macro with the name of each member of XrSpaceGroupUuidFilterInfoMETA, in order.
+#define XR_LIST_STRUCT_XrSpaceGroupUuidFilterInfoMETA(_) \
+    _(type) \
+    _(next) \
+    _(groupUuid) \
 
 
 
@@ -5448,6 +5786,8 @@ XR_ENUM_STR(XrResult);
     _(XrCompositionLayerSettingsFB, XR_TYPE_COMPOSITION_LAYER_SETTINGS_FB) \
     _(XrHapticPcmVibrationFB, XR_TYPE_HAPTIC_PCM_VIBRATION_FB) \
     _(XrDevicePcmSampleRateStateFB, XR_TYPE_DEVICE_PCM_SAMPLE_RATE_STATE_FB) \
+    _(XrFrameSynthesisInfoEXT, XR_TYPE_FRAME_SYNTHESIS_INFO_EXT) \
+    _(XrFrameSynthesisConfigViewEXT, XR_TYPE_FRAME_SYNTHESIS_CONFIG_VIEW_EXT) \
     _(XrCompositionLayerDepthTestFB, XR_TYPE_COMPOSITION_LAYER_DEPTH_TEST_FB) \
     _(XrLocalDimmingFrameEndInfoMETA, XR_TYPE_LOCAL_DIMMING_FRAME_END_INFO_META) \
     _(XrPassthroughPreferencesMETA, XR_TYPE_PASSTHROUGH_PREFERENCES_META) \
@@ -5482,10 +5822,14 @@ XR_ENUM_STR(XrResult);
     _(XrSystemPassthroughColorLutPropertiesMETA, XR_TYPE_SYSTEM_PASSTHROUGH_COLOR_LUT_PROPERTIES_META) \
     _(XrSpaceTriangleMeshGetInfoMETA, XR_TYPE_SPACE_TRIANGLE_MESH_GET_INFO_META) \
     _(XrSpaceTriangleMeshMETA, XR_TYPE_SPACE_TRIANGLE_MESH_META) \
+    _(XrEventDataPassthroughLayerResumedMETA, XR_TYPE_EVENT_DATA_PASSTHROUGH_LAYER_RESUMED_META) \
     _(XrSystemFaceTrackingProperties2FB, XR_TYPE_SYSTEM_FACE_TRACKING_PROPERTIES2_FB) \
     _(XrFaceTrackerCreateInfo2FB, XR_TYPE_FACE_TRACKER_CREATE_INFO2_FB) \
     _(XrFaceExpressionInfo2FB, XR_TYPE_FACE_EXPRESSION_INFO2_FB) \
     _(XrFaceExpressionWeights2FB, XR_TYPE_FACE_EXPRESSION_WEIGHTS2_FB) \
+    _(XrSystemSpatialEntitySharingPropertiesMETA, XR_TYPE_SYSTEM_SPATIAL_ENTITY_SHARING_PROPERTIES_META) \
+    _(XrShareSpacesInfoMETA, XR_TYPE_SHARE_SPACES_INFO_META) \
+    _(XrEventDataShareSpacesCompleteMETA, XR_TYPE_EVENT_DATA_SHARE_SPACES_COMPLETE_META) \
     _(XrEnvironmentDepthProviderCreateInfoMETA, XR_TYPE_ENVIRONMENT_DEPTH_PROVIDER_CREATE_INFO_META) \
     _(XrEnvironmentDepthSwapchainCreateInfoMETA, XR_TYPE_ENVIRONMENT_DEPTH_SWAPCHAIN_CREATE_INFO_META) \
     _(XrEnvironmentDepthSwapchainStateMETA, XR_TYPE_ENVIRONMENT_DEPTH_SWAPCHAIN_STATE_META) \
@@ -5511,6 +5855,10 @@ XR_ENUM_STR(XrResult);
     _(XrActiveActionSetPrioritiesEXT, XR_TYPE_ACTIVE_ACTION_SET_PRIORITIES_EXT) \
     _(XrSystemForceFeedbackCurlPropertiesMNDX, XR_TYPE_SYSTEM_FORCE_FEEDBACK_CURL_PROPERTIES_MNDX) \
     _(XrForceFeedbackCurlApplyLocationsMNDX, XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX) \
+    _(XrSystemBodyTrackingPropertiesBD, XR_TYPE_SYSTEM_BODY_TRACKING_PROPERTIES_BD) \
+    _(XrBodyTrackerCreateInfoBD, XR_TYPE_BODY_TRACKER_CREATE_INFO_BD) \
+    _(XrBodyJointsLocateInfoBD, XR_TYPE_BODY_JOINTS_LOCATE_INFO_BD) \
+    _(XrBodyJointLocationsBD, XR_TYPE_BODY_JOINT_LOCATIONS_BD) \
     _(XrHandTrackingDataSourceInfoEXT, XR_TYPE_HAND_TRACKING_DATA_SOURCE_INFO_EXT) \
     _(XrHandTrackingDataSourceStateEXT, XR_TYPE_HAND_TRACKING_DATA_SOURCE_STATE_EXT) \
     _(XrSystemPlaneDetectionPropertiesEXT, XR_TYPE_SYSTEM_PLANE_DETECTION_PROPERTIES_EXT) \
@@ -5542,6 +5890,25 @@ XR_ENUM_STR(XrResult);
     _(XrWorldMeshBlockML, XR_TYPE_WORLD_MESH_BLOCK_ML) \
     _(XrWorldMeshRequestCompletionInfoML, XR_TYPE_WORLD_MESH_REQUEST_COMPLETION_INFO_ML) \
     _(XrWorldMeshRequestCompletionML, XR_TYPE_WORLD_MESH_REQUEST_COMPLETION_ML) \
+    _(XrSystemFacialExpressionPropertiesML, XR_TYPE_SYSTEM_FACIAL_EXPRESSION_PROPERTIES_ML) \
+    _(XrFacialExpressionClientCreateInfoML, XR_TYPE_FACIAL_EXPRESSION_CLIENT_CREATE_INFO_ML) \
+    _(XrFacialExpressionBlendShapeGetInfoML, XR_TYPE_FACIAL_EXPRESSION_BLEND_SHAPE_GET_INFO_ML) \
+    _(XrFacialExpressionBlendShapePropertiesML, XR_TYPE_FACIAL_EXPRESSION_BLEND_SHAPE_PROPERTIES_ML) \
+    _(XrColocationDiscoveryStartInfoMETA, XR_TYPE_COLOCATION_DISCOVERY_START_INFO_META) \
+    _(XrColocationDiscoveryStopInfoMETA, XR_TYPE_COLOCATION_DISCOVERY_STOP_INFO_META) \
+    _(XrColocationAdvertisementStartInfoMETA, XR_TYPE_COLOCATION_ADVERTISEMENT_START_INFO_META) \
+    _(XrColocationAdvertisementStopInfoMETA, XR_TYPE_COLOCATION_ADVERTISEMENT_STOP_INFO_META) \
+    _(XrEventDataStartColocationAdvertisementCompleteMETA, XR_TYPE_EVENT_DATA_START_COLOCATION_ADVERTISEMENT_COMPLETE_META) \
+    _(XrEventDataStopColocationAdvertisementCompleteMETA, XR_TYPE_EVENT_DATA_STOP_COLOCATION_ADVERTISEMENT_COMPLETE_META) \
+    _(XrEventDataColocationAdvertisementCompleteMETA, XR_TYPE_EVENT_DATA_COLOCATION_ADVERTISEMENT_COMPLETE_META) \
+    _(XrEventDataStartColocationDiscoveryCompleteMETA, XR_TYPE_EVENT_DATA_START_COLOCATION_DISCOVERY_COMPLETE_META) \
+    _(XrEventDataColocationDiscoveryResultMETA, XR_TYPE_EVENT_DATA_COLOCATION_DISCOVERY_RESULT_META) \
+    _(XrEventDataColocationDiscoveryCompleteMETA, XR_TYPE_EVENT_DATA_COLOCATION_DISCOVERY_COMPLETE_META) \
+    _(XrEventDataStopColocationDiscoveryCompleteMETA, XR_TYPE_EVENT_DATA_STOP_COLOCATION_DISCOVERY_COMPLETE_META) \
+    _(XrSystemColocationDiscoveryPropertiesMETA, XR_TYPE_SYSTEM_COLOCATION_DISCOVERY_PROPERTIES_META) \
+    _(XrSystemSpatialEntityGroupSharingPropertiesMETA, XR_TYPE_SYSTEM_SPATIAL_ENTITY_GROUP_SHARING_PROPERTIES_META) \
+    _(XrShareSpacesRecipientGroupsMETA, XR_TYPE_SHARE_SPACES_RECIPIENT_GROUPS_META) \
+    _(XrSpaceGroupUuidFilterInfoMETA, XR_TYPE_SPACE_GROUP_UUID_FILTER_INFO_META) \
 
 
 #if defined(XR_USE_GRAPHICS_API_D3D11)
@@ -5842,6 +6209,7 @@ XR_ENUM_STR(XrResult);
     _(XR_FB_composition_layer_settings, 205) \
     _(XR_FB_touch_controller_proximity, 207) \
     _(XR_FB_haptic_pcm, 210) \
+    _(XR_EXT_frame_synthesis, 212) \
     _(XR_FB_composition_layer_depth_test, 213) \
     _(XR_META_local_dimming, 217) \
     _(XR_META_passthrough_preferences, 218) \
@@ -5857,7 +6225,9 @@ XR_ENUM_STR(XrResult);
     _(XR_META_spatial_entity_mesh, 270) \
     _(XR_META_automatic_layer_filter, 272) \
     _(XR_META_touch_controller_plus, 280) \
+    _(XR_META_passthrough_layer_resumed_event, 283) \
     _(XR_FB_face_tracking2, 288) \
+    _(XR_META_spatial_entity_sharing, 291) \
     _(XR_META_environment_depth, 292) \
     _(XR_EXT_uuid, 300) \
     _(XR_EXT_hand_interaction, 303) \
@@ -5869,6 +6239,7 @@ XR_ENUM_STR(XrResult);
     _(XR_EXT_active_action_set_priority, 374) \
     _(XR_MNDX_force_feedback_curl, 376) \
     _(XR_BD_controller_interaction, 385) \
+    _(XR_BD_body_tracking, 386) \
     _(XR_EXT_local_floor, 427) \
     _(XR_EXT_hand_tracking_data_source, 429) \
     _(XR_EXT_plane_detection, 430) \
@@ -5879,9 +6250,12 @@ XR_ENUM_STR(XrResult);
     _(XR_ML_user_calibration, 473) \
     _(XR_ML_system_notifications, 474) \
     _(XR_ML_world_mesh_detection, 475) \
+    _(XR_ML_facial_expression, 483) \
     _(XR_ML_view_configuration_depth_range_change, 484) \
     _(XR_YVR_controller_interaction, 498) \
     _(XR_EXT_composition_layer_inverted_alpha, 555) \
+    _(XR_META_colocation_discovery, 572) \
+    _(XR_META_spatial_entity_group_sharing, 573) \
     _(XR_KHR_maintenance1, 711) \
 
 
@@ -6683,6 +7057,14 @@ XR_ENUM_STR(XrResult);
     _(GetFaceExpressionWeights2FB, FB_face_tracking2) \
 
 
+/// For every function defined by XR_META_spatial_entity_sharing in this version of the spec,
+/// calls your macro with the function name and extension name.
+/// Trims the leading `xr` from the function name and the leading `XR_` from the feature name,
+/// because it is easy to add back but impossible to remove with the preprocessor.
+#define XR_LIST_FUNCTIONS_XR_META_spatial_entity_sharing(_) \
+    _(ShareSpacesMETA, META_spatial_entity_sharing) \
+
+
 /// For every function defined by XR_META_environment_depth in this version of the spec,
 /// calls your macro with the function name and extension name.
 /// Trims the leading `xr` from the function name and the leading `XR_` from the feature name,
@@ -6753,6 +7135,16 @@ XR_ENUM_STR(XrResult);
     _(ApplyForceFeedbackCurlMNDX, MNDX_force_feedback_curl) \
 
 
+/// For every function defined by XR_BD_body_tracking in this version of the spec,
+/// calls your macro with the function name and extension name.
+/// Trims the leading `xr` from the function name and the leading `XR_` from the feature name,
+/// because it is easy to add back but impossible to remove with the preprocessor.
+#define XR_LIST_FUNCTIONS_XR_BD_body_tracking(_) \
+    _(CreateBodyTrackerBD, BD_body_tracking) \
+    _(DestroyBodyTrackerBD, BD_body_tracking) \
+    _(LocateBodyJointsBD, BD_body_tracking) \
+
+
 /// For every function defined by XR_EXT_plane_detection in this version of the spec,
 /// calls your macro with the function name and extension name.
 /// Trims the leading `xr` from the function name and the leading `XR_` from the feature name,
@@ -6805,6 +7197,27 @@ XR_ENUM_STR(XrResult);
     _(FreeWorldMeshBufferML, ML_world_mesh_detection) \
     _(RequestWorldMeshAsyncML, ML_world_mesh_detection) \
     _(RequestWorldMeshCompleteML, ML_world_mesh_detection) \
+
+
+/// For every function defined by XR_ML_facial_expression in this version of the spec,
+/// calls your macro with the function name and extension name.
+/// Trims the leading `xr` from the function name and the leading `XR_` from the feature name,
+/// because it is easy to add back but impossible to remove with the preprocessor.
+#define XR_LIST_FUNCTIONS_XR_ML_facial_expression(_) \
+    _(CreateFacialExpressionClientML, ML_facial_expression) \
+    _(DestroyFacialExpressionClientML, ML_facial_expression) \
+    _(GetFacialExpressionBlendShapePropertiesML, ML_facial_expression) \
+
+
+/// For every function defined by XR_META_colocation_discovery in this version of the spec,
+/// calls your macro with the function name and extension name.
+/// Trims the leading `xr` from the function name and the leading `XR_` from the feature name,
+/// because it is easy to add back but impossible to remove with the preprocessor.
+#define XR_LIST_FUNCTIONS_XR_META_colocation_discovery(_) \
+    _(StartColocationDiscoveryMETA, META_colocation_discovery) \
+    _(StopColocationDiscoveryMETA, META_colocation_discovery) \
+    _(StartColocationAdvertisementMETA, META_colocation_discovery) \
+    _(StopColocationAdvertisementMETA, META_colocation_discovery) \
 
 
 

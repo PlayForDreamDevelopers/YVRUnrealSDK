@@ -62,7 +62,7 @@ void FYvrXRSpaceMeshManager::PollEvent(XrEventDataBuffer EventData)
 					XrTime TargetTime = YvrXRHMD->GetDisplayTime();
 					XrResult Results = xrLocateSpace(DeviceSpace, BaseSpace, TargetTime, &DeviceLocation);
 
-					float WorldToMetersScale = SpaceMeshComponent->GetWorld()->GetWorldSettings()->WorldToMeters;
+					float WorldToMetersScale = YvrXRHMD->GetWorldToMetersScale();
 					FTransform UnrealPose = ToFTransform(DeviceLocation.pose, WorldToMetersScale);
 					FTransform TrackingToWorld = YvrXRHMD->GetTrackingToWorldTransform();
 					FTransform ResultPose = UnrealPose;

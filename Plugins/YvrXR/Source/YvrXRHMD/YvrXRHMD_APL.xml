@@ -18,7 +18,18 @@
     <addPermission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <addPermission android:name="android.permission.CHANGE_CONFIGURATION" />
 
+    <addPermission android:name="org.khronos.openxr.permission.OPENXR" />
+    <addPermission android:name="org.khronos.openxr.permission.OPENXR_SYSTEM" />
+
     <addFeature android:name="android.hardware.vr.headtracking" android:version="1" android:required="true" />
+
+    <addElements tag="queries">
+      <provider android:authorities="org.khronos.openxr.runtime_broker;org.khronos.openxr.system_runtime_broker" />
+    </addElements>
+    <addElements tag="intent">
+      <action android:name="org.khronos.openxr.OpenXRRuntimeService" />
+      <action android:name="org.khronos.openxr.OpenXRApiLayerService" />
+    </addElements>
 
     <addElements tag="application">
       <meta-data android:name="com.yvr.application.mode" android:value="vr_only"/>

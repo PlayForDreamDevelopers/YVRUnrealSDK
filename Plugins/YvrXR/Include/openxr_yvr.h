@@ -501,8 +501,10 @@ typedef enum XrMeshBlockChangeStateYVR {
     XR_MESH_BLOCK_CHANGE_STATE_UPDATED_YVR = 1,
     XR_MESH_BLOCK_CHANGE_STATE_REMOVED_YVR = 2,
     XR_MESH_BLOCK_CHANGE_STATE_UNCHANGED_YVR = 3,
+    XR_MESH_BLOCK_CHANGE_STATE_CLEAR_YVR = 4,
     XR_MESH_BLOCK_CHANGE_STATE_MAX_ENUM_YVR = 0x7FFFFFFF
 } XrMeshBlockChangeStateYVR;
+
 
 XR_STRUCT_ENUM(XR_TYPE_MESH_DETECTOR_CREATE_INFO_YVR, 1000514000);
 typedef struct XrMeshDetectorCreateInfoYVR {
@@ -613,7 +615,7 @@ typedef struct XrLocateViewFrustumRotationYVR {
 // clang-format on
 
 #ifdef __cplusplus
-} // extern "C"
+}  // extern "C"
 #endif
 
-#endif // OPENXR_YVR_H_
+#endif  // OPENXR_YVR_H_
