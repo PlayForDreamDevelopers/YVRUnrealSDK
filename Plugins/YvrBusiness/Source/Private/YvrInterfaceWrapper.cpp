@@ -1,21 +1,30 @@
 ﻿#include "YvrInterfaceWrapper.h"
+#include "YvrCameraComponent.h"
 
 #if PLATFORM_ANDROID
 #include <dlfcn.h>
 #endif
 
-setVSTCameraFrequency* FYvrInterfaceWrapper::Yvr_setVSTCameraFrequency_Interface;
-getVSTCameraFrequency* FYvrInterfaceWrapper::Yvr_getVSTCameraFrequency_Interface;
-setVSTCameraResolution* FYvrInterfaceWrapper::Yvr_setVSTCameraResolution_Interface;
-getVSTCameraResolution* FYvrInterfaceWrapper::Yvr_getVSTCameraResolution_Interface;
-setVSTCameraFormat* FYvrInterfaceWrapper::Yvr_setVSTCameraFormat_Interface;
-getVSTCameraFormat* FYvrInterfaceWrapper::Yvr_getVSTCameraFormat_Interface;
-setVSTCameraOutputSource* FYvrInterfaceWrapper::Yvr_setVSTCameraOutputSource_Interface;
-getVSTCameraOutputSource* FYvrInterfaceWrapper::Yvr_getVSTCameraOutputSource_Interface;
-getVSTCameraIntrinsicExtrinsic* FYvrInterfaceWrapper::Yvr_getVSTCameraIntrinsicExtrinsic_Interface;
-openVSTCamera* FYvrInterfaceWrapper::Yvr_openVSTCamera_Interface;
-closeVSTCamera* FYvrInterfaceWrapper::Yvr_closeVSTCamera_Interface;
-acquireVSTCameraFrame* FYvrInterfaceWrapper::Yvr_acquireVSTCameraFrame_Interface;
+pfdm_xr_set_vst_camera_frequency* FYvrInterfaceWrapper::Yvr_set_vst_camera_frequency_Interface;
+pfdm_xr_get_vst_camera_frequency* FYvrInterfaceWrapper::Yvr_get_vst_camera_frequency_Interface;
+pfdm_xr_set_vst_camera_resolution* FYvrInterfaceWrapper::Yvr_set_vst_camera_resolution_Interface;
+pfdm_xr_get_vst_camera_resolution* FYvrInterfaceWrapper::Yvr_get_vst_camera_resolution_Interface;
+pfdm_xr_set_vst_camera_format* FYvrInterfaceWrapper::Yvr_set_vst_camera_format_Interface;
+pfdm_xr_get_vst_camera_format* FYvrInterfaceWrapper::Yvr_get_vst_camera_format_Interface;
+pfdm_xr_set_vst_camera_output_source* FYvrInterfaceWrapper::Yvr_set_vst_camera_output_source_Interface;
+pfdm_xr_get_vst_camera_output_source* FYvrInterfaceWrapper::Yvr_get_vst_camera_output_source_Interface;
+pfdm_xr_get_vst_camera_intrinsic_extrinsic* FYvrInterfaceWrapper::Yvr_get_vst_camera_intrinsic_extrinsic_Interface;
+pfdm_xr_open_vst_camera* FYvrInterfaceWrapper::Yvr_open_vst_camera_Interface;
+pfdm_xr_close_vst_camera* FYvrInterfaceWrapper::Yvr_close_vst_camera_Interface;
+pfdm_xr_acquire_vst_camera_frame* FYvrInterfaceWrapper::Yvr_acquire_vst_camera_frame_Interface;
+
+pfdm_xr_open_tracking_camera* FYvrInterfaceWrapper::Yvr_open_tracking_camera_Interface;
+pfdm_xr_close_tracking_camera* FYvrInterfaceWrapper::Yvr_close_tracking_camera_Interface;
+pfdm_xr_subscribe_frame* FYvrInterfaceWrapper::Yvr_subscribe_frame_Interface;
+pfdm_xr_unsubscribe_frame* FYvrInterfaceWrapper::Yvr_unsubscribe_frame_Interface;
+pfdm_xr_acquire_tracking_camera_frame* FYvrInterfaceWrapper::Yvr_acquire_tracking_camera_frame_Interface;
+pfdm_xr_set_tracking_camera_fps* FYvrInterfaceWrapper::Yvr_set_tracking_camera_fps_Interface;
+pfdm_xr_get_tracking_camera_fps* FYvrInterfaceWrapper::Yvr_get_tracking_camera_fps_Interface;
 
 void* LoadEntryPoint(void* Handle, const char* EntryPointName)
 {
@@ -47,79 +56,159 @@ bool FYvrInterfaceWrapper::Init()
 		return false;
 	}
 
-	Yvr_setVSTCameraFrequency_Interface = reinterpret_cast<setVSTCameraFrequency*>(LoadEntryPoint(Handle, "setVSTCameraFrequency"));
-	Yvr_getVSTCameraFrequency_Interface = reinterpret_cast<getVSTCameraFrequency*>(LoadEntryPoint(Handle, "getVSTCameraFrequency"));
-	Yvr_setVSTCameraResolution_Interface = reinterpret_cast<setVSTCameraResolution*>(LoadEntryPoint(Handle, "setVSTCameraResolution"));
-	Yvr_getVSTCameraResolution_Interface = reinterpret_cast<getVSTCameraResolution*>(LoadEntryPoint(Handle, "getVSTCameraResolution"));
-	Yvr_setVSTCameraFormat_Interface = reinterpret_cast<setVSTCameraFormat*>(LoadEntryPoint(Handle, "setVSTCameraFormat"));
-	Yvr_getVSTCameraFormat_Interface = reinterpret_cast<getVSTCameraFormat*>(LoadEntryPoint(Handle, "getVSTCameraFormat"));
-	Yvr_setVSTCameraOutputSource_Interface = reinterpret_cast<setVSTCameraOutputSource*>(LoadEntryPoint(Handle, "setVSTCameraOutputSource"));
-	Yvr_getVSTCameraOutputSource_Interface = reinterpret_cast<getVSTCameraOutputSource*>(LoadEntryPoint(Handle, "getVSTCameraOutputSource"));
-	Yvr_getVSTCameraIntrinsicExtrinsic_Interface = reinterpret_cast<getVSTCameraIntrinsicExtrinsic*>(LoadEntryPoint(Handle, "getVSTCameraIntrinsicExtrinsic"));
-	Yvr_openVSTCamera_Interface = reinterpret_cast<openVSTCamera*>(LoadEntryPoint(Handle, "openVSTCamera"));
-	Yvr_closeVSTCamera_Interface = reinterpret_cast<closeVSTCamera*>(LoadEntryPoint(Handle, "closeVSTCamera"));
-	Yvr_acquireVSTCameraFrame_Interface = reinterpret_cast<acquireVSTCameraFrame*>(LoadEntryPoint(Handle, "acquireVSTCameraFrame"));
+	Yvr_set_vst_camera_frequency_Interface = reinterpret_cast<pfdm_xr_set_vst_camera_frequency*>(LoadEntryPoint(Handle, "pfdm_xr_set_vst_camera_frequency"));
+	Yvr_get_vst_camera_frequency_Interface = reinterpret_cast<pfdm_xr_get_vst_camera_frequency*>(LoadEntryPoint(Handle, "pfdm_xr_get_vst_camera_frequency"));
+	Yvr_set_vst_camera_resolution_Interface = reinterpret_cast<pfdm_xr_set_vst_camera_resolution*>(LoadEntryPoint(Handle, "pfdm_xr_set_vst_camera_resolution"));
+	Yvr_get_vst_camera_resolution_Interface = reinterpret_cast<pfdm_xr_get_vst_camera_resolution*>(LoadEntryPoint(Handle, "pfdm_xr_get_vst_camera_resolution"));
+	Yvr_set_vst_camera_format_Interface = reinterpret_cast<pfdm_xr_set_vst_camera_format*>(LoadEntryPoint(Handle, "pfdm_xr_set_vst_camera_format"));
+	Yvr_get_vst_camera_format_Interface = reinterpret_cast<pfdm_xr_get_vst_camera_format*>(LoadEntryPoint(Handle, "pfdm_xr_get_vst_camera_format"));
+	Yvr_set_vst_camera_output_source_Interface = reinterpret_cast<pfdm_xr_set_vst_camera_output_source*>(LoadEntryPoint(Handle, "pfdm_xr_set_vst_camera_output_source"));
+	Yvr_get_vst_camera_output_source_Interface = reinterpret_cast<pfdm_xr_get_vst_camera_output_source*>(LoadEntryPoint(Handle, "pfdm_xr_get_vst_camera_output_source"));
+	Yvr_get_vst_camera_intrinsic_extrinsic_Interface = reinterpret_cast<pfdm_xr_get_vst_camera_intrinsic_extrinsic*>(LoadEntryPoint(Handle, "pfdm_xr_get_vst_camera_intrinsic_extrinsic"));
+	Yvr_open_vst_camera_Interface = reinterpret_cast<pfdm_xr_open_vst_camera*>(LoadEntryPoint(Handle, "pfdm_xr_open_vst_camera"));
+	Yvr_close_vst_camera_Interface = reinterpret_cast<pfdm_xr_close_vst_camera*>(LoadEntryPoint(Handle, "pfdm_xr_close_vst_camera"));
+	Yvr_acquire_vst_camera_frame_Interface = reinterpret_cast<pfdm_xr_acquire_vst_camera_frame*>(LoadEntryPoint(Handle, "pfdm_xr_acquire_vst_camera_frame"));
+
+	Yvr_open_tracking_camera_Interface = reinterpret_cast<pfdm_xr_open_tracking_camera*>(LoadEntryPoint(Handle, "pfdm_xr_open_tracking_camera"));
+	Yvr_close_tracking_camera_Interface = reinterpret_cast<pfdm_xr_close_tracking_camera*>(LoadEntryPoint(Handle, "pfdm_xr_close_tracking_camera"));
+	Yvr_subscribe_frame_Interface = reinterpret_cast<pfdm_xr_subscribe_frame*>(LoadEntryPoint(Handle, "pfdm_xr_subscribe_frame"));
+	Yvr_unsubscribe_frame_Interface = reinterpret_cast<pfdm_xr_unsubscribe_frame*>(LoadEntryPoint(Handle, "pfdm_xr_unsubscribe_frame"));
+	Yvr_acquire_tracking_camera_frame_Interface = reinterpret_cast<pfdm_xr_acquire_tracking_camera_frame*>(LoadEntryPoint(Handle, "pfdm_xr_acquire_tracking_camera_frame"));
+	Yvr_set_tracking_camera_fps_Interface = reinterpret_cast<pfdm_xr_set_tracking_camera_fps*>(LoadEntryPoint(Handle, "pfdm_xr_set_tracking_camera_fps"));
+	Yvr_get_tracking_camera_fps_Interface = reinterpret_cast<pfdm_xr_get_tracking_camera_fps*>(LoadEntryPoint(Handle, "pfdm_xr_get_tracking_camera_fps"));
 
 	UE_LOG(LogTemp, Display, TEXT("FYvrInterfaceWrapper Init Success"));
+
 	return true;
 }
 
 pfdm_xr_camera_error_t FYvrInterfaceWrapper::OpenVSTCamera()
 {
-	return Yvr_openVSTCamera_Interface ? Yvr_openVSTCamera_Interface() : pfdm_xr_camera_error_t();
+	return Yvr_open_vst_camera_Interface ? Yvr_open_vst_camera_Interface() : pfdm_xr_camera_error_t();
 }
 
 pfdm_xr_camera_error_t FYvrInterfaceWrapper::CloseVSTCamera()
 {
-	return Yvr_closeVSTCamera_Interface ? Yvr_closeVSTCamera_Interface() : pfdm_xr_camera_error_t();
+	return Yvr_close_vst_camera_Interface ? Yvr_close_vst_camera_Interface() : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::AcquireVSTCameraFrame(vst_camera_frame_item_ext_t* out_frame)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::AcquireVSTCameraFrame(pfdm_xr_vst_camera_frame_item_ext_t* out_frame)
 {
-	return Yvr_acquireVSTCameraFrame_Interface ? Yvr_acquireVSTCameraFrame_Interface(out_frame) : pfdm_xr_camera_error_t();
+	return Yvr_acquire_vst_camera_frame_Interface ? Yvr_acquire_vst_camera_frame_Interface(out_frame) : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::SetVSTCameraFrequency(vst_camera_frequency_cfg_t freq)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::SetVSTCameraFrequency(pfdm_xr_vst_camera_frequency_cfg_t freq)
 {
-	return Yvr_setVSTCameraFrequency_Interface ? Yvr_setVSTCameraFrequency_Interface(freq) : pfdm_xr_camera_error_t();
+	return Yvr_set_vst_camera_frequency_Interface ? Yvr_set_vst_camera_frequency_Interface(freq) : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraFrequency(vst_camera_frequency_cfg_t* freq)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraFrequency(pfdm_xr_vst_camera_frequency_cfg_t* freq)
 {
-	return Yvr_getVSTCameraFrequency_Interface ? Yvr_getVSTCameraFrequency_Interface(freq) : pfdm_xr_camera_error_t();
+	return Yvr_get_vst_camera_frequency_Interface ? Yvr_get_vst_camera_frequency_Interface(freq) : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::SetVSTCameraResolution(vst_camera_resolution_cfg_t resolution)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::SetVSTCameraResolution(pfdm_xr_vst_camera_resolution_cfg_t resolution)
 {
-	return Yvr_setVSTCameraResolution_Interface ? Yvr_setVSTCameraResolution_Interface(resolution) : pfdm_xr_camera_error_t();
+	return Yvr_set_vst_camera_resolution_Interface ? Yvr_set_vst_camera_resolution_Interface(resolution) : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraResolution(vst_camera_resolution_cfg_t* resolution)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraResolution(pfdm_xr_vst_camera_resolution_cfg_t* resolution)
 {
-	return Yvr_getVSTCameraResolution_Interface ? Yvr_getVSTCameraResolution_Interface(resolution) : pfdm_xr_camera_error_t();
+	return Yvr_get_vst_camera_resolution_Interface ? Yvr_get_vst_camera_resolution_Interface(resolution) : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::SetVSTCameraFormat(vst_camera_format_cfg_t fmt)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::SetVSTCameraFormat(pfdm_xr_vst_camera_format_cfg_t fmt)
 {
-	return Yvr_setVSTCameraFormat_Interface ? Yvr_setVSTCameraFormat_Interface(fmt) : pfdm_xr_camera_error_t();
+	return Yvr_set_vst_camera_format_Interface ? Yvr_set_vst_camera_format_Interface(fmt) : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraFormat(vst_camera_format_cfg_t* fmt)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraFormat(pfdm_xr_vst_camera_format_cfg_t* fmt)
 {
-	return Yvr_getVSTCameraFormat_Interface ? Yvr_getVSTCameraFormat_Interface(fmt) : pfdm_xr_camera_error_t();
+	return Yvr_get_vst_camera_format_Interface ? Yvr_get_vst_camera_format_Interface(fmt) : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::SetVSTCameraOutputSource(vst_camera_source_cfg_t source)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::SetVSTCameraOutputSource(pfdm_xr_vst_camera_source_cfg_t source)
 {
-	return Yvr_setVSTCameraOutputSource_Interface ? Yvr_setVSTCameraOutputSource_Interface(source) : pfdm_xr_camera_error_t();
+	return Yvr_set_vst_camera_output_source_Interface ? Yvr_set_vst_camera_output_source_Interface(source) : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraOutputSource(vst_camera_source_cfg_t* source)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraOutputSource(pfdm_xr_vst_camera_source_cfg_t* source)
 {
-	return Yvr_getVSTCameraOutputSource_Interface ? Yvr_getVSTCameraOutputSource_Interface(source) : pfdm_xr_camera_error_t();
+	return Yvr_get_vst_camera_output_source_Interface ? Yvr_get_vst_camera_output_source_Interface(source) : pfdm_xr_camera_error_t();
 }
 
-pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraIntrinsicExtrinsic(vst_camera_id_t id, vst_camera_intrinsic_extrinsic_t* params)
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetVSTCameraIntrinsicExtrinsic(pfdm_xr_vst_camera_id_t id, pfdm_xr_vst_camera_intrinsic_extrinsic_t* params)
 {
-	return Yvr_getVSTCameraIntrinsicExtrinsic_Interface ? Yvr_getVSTCameraIntrinsicExtrinsic_Interface(id, params) : pfdm_xr_camera_error_t();
+	return Yvr_get_vst_camera_intrinsic_extrinsic_Interface ? Yvr_get_vst_camera_intrinsic_extrinsic_Interface(id, params) : pfdm_xr_camera_error_t();
+}
+
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::OpenTrackingCamera(pfdm_xr_camera_type_t type)
+{
+	return Yvr_open_tracking_camera_Interface ? Yvr_open_tracking_camera_Interface(type) : pfdm_xr_camera_error_t();
+}
+
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::CloseTrackingCamera(pfdm_xr_camera_type_t type)
+{
+	return Yvr_close_tracking_camera_Interface ? Yvr_close_tracking_camera_Interface(type) : pfdm_xr_camera_error_t();
+}
+
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::SubscribeFrame(pfdm_xr_camera_type_t type)
+{
+	if(Yvr_subscribe_frame_Interface){
+		pfdm_xr_camera_error_t error = 
+		Yvr_subscribe_frame_Interface
+		(type, 
+			[](pfdm_xr_camera_frame_item_t* frame_output, void* user_data) {
+				FVSTCameraFrameItem CameraFrameItem;
+				CameraFrameItem.FrameNumber = frame_output->frame_number;
+				CameraFrameItem.Width = frame_output->width;
+				CameraFrameItem.Height = frame_output->height;
+				CameraFrameItem.Format = frame_output->format;
+				CameraFrameItem.ExposureDuration = frame_output->exposure_duration;
+				CameraFrameItem.SoeTimestamp = frame_output->soe_timestamp;
+				CameraFrameItem.SoeTimestampQ = frame_output->soe_timestamp_q;
+				CameraFrameItem.Gain = frame_output->gain;
+				CameraFrameItem.DataSize = frame_output->data_size;
+				if (frame_output->data[0] != nullptr)
+				{
+					CameraFrameItem.LeftEyeData.SetNum(CameraFrameItem.DataSize);
+					FMemory::Memcpy(CameraFrameItem.LeftEyeData.GetData(), (void*)frame_output->data[0], sizeof(uint8) * CameraFrameItem.DataSize);
+				}
+			
+				if (frame_output->data[1] != nullptr)
+				{
+					CameraFrameItem.RightEyeData.SetNum(CameraFrameItem.DataSize);
+					FMemory::Memcpy(CameraFrameItem.RightEyeData.GetData(), (void*)frame_output->data[1], sizeof(uint8) * CameraFrameItem.DataSize);
+				}
+
+				//UObject* myClassInstance = static_cast<UObject*>(user_data);
+
+				UYvrBusinessDelegates::CameraFrameDelegate.Broadcast(CameraFrameItem);
+			}, 
+		nullptr);
+		return error;
+	}
+	else {
+		return pfdm_xr_camera_error_t();
+	}
+}
+
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::UnSubscribeFrame(pfdm_xr_camera_type_t type)
+{
+	return Yvr_unsubscribe_frame_Interface ? Yvr_unsubscribe_frame_Interface(type) : pfdm_xr_camera_error_t();
+}
+
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::AcquireTrackingCameraFrame(pfdm_xr_camera_type_t type, pfdm_xr_camera_frame_item_t *frame_output)
+{
+	return Yvr_acquire_tracking_camera_frame_Interface ? Yvr_acquire_tracking_camera_frame_Interface(type, frame_output) : pfdm_xr_camera_error_t();
+}
+
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::SetTrackingCameraFps(pfdm_xr_camera_type_t type, int32_t frequency)
+{
+	return Yvr_set_tracking_camera_fps_Interface ? Yvr_set_tracking_camera_fps_Interface(type, frequency) : pfdm_xr_camera_error_t();
+}
+
+pfdm_xr_camera_error_t FYvrInterfaceWrapper::GetTrackingCameraFps(pfdm_xr_camera_type_t type, int32_t *frequency)
+{
+	return Yvr_get_tracking_camera_fps_Interface ? Yvr_get_tracking_camera_fps_Interface(type, frequency) : pfdm_xr_camera_error_t();
 }

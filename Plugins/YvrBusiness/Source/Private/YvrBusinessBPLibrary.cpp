@@ -44,7 +44,7 @@ bool UYvrBusinessBPLibrary::CloseVSTCamera()
 
 bool UYvrBusinessBPLibrary::AcquireVSTCameraFrame(FVSTCameraFrame& OutFrame)
 {
-	vst_camera_frame_item_ext_t OutRawFrame;
+	pfdm_xr_vst_camera_frame_item_ext_t OutRawFrame;
 	pfdm_xr_camera_error_t result = FYvrInterfaceWrapper::AcquireVSTCameraFrame(&OutRawFrame);
 
 	if (result != pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR)
@@ -89,12 +89,12 @@ bool UYvrBusinessBPLibrary::AcquireVSTCameraFrame(FVSTCameraFrame& OutFrame)
 
 bool UYvrBusinessBPLibrary::SetVSTCameraFrequency(EVSTCameraFrequency Frequency)
 {
-	return FYvrInterfaceWrapper::SetVSTCameraFrequency((vst_camera_frequency_cfg_t)Frequency) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
+	return FYvrInterfaceWrapper::SetVSTCameraFrequency((pfdm_xr_vst_camera_frequency_cfg_t)Frequency) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
 }
 
 bool UYvrBusinessBPLibrary::GetVSTCameraFrequency(EVSTCameraFrequency& OutFrequency)
 {
-	vst_camera_frequency_cfg_t OutRawFrequency;
+	pfdm_xr_vst_camera_frequency_cfg_t OutRawFrequency;
 	pfdm_xr_camera_error_t result = FYvrInterfaceWrapper::GetVSTCameraFrequency(&OutRawFrequency);
 	if (result != pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR)
 	{
@@ -107,12 +107,12 @@ bool UYvrBusinessBPLibrary::GetVSTCameraFrequency(EVSTCameraFrequency& OutFreque
 
 bool UYvrBusinessBPLibrary::SetVSTCameraResolution(EVSTCameraResolution Resolution)
 {
-	return FYvrInterfaceWrapper::SetVSTCameraResolution((vst_camera_resolution_cfg_t)Resolution) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
+	return FYvrInterfaceWrapper::SetVSTCameraResolution((pfdm_xr_vst_camera_resolution_cfg_t)Resolution) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
 }
 
 bool UYvrBusinessBPLibrary::GetVSTCameraResolution(EVSTCameraResolution& OutResolution)
 {
-	vst_camera_resolution_cfg_t OutRawResolution;
+	pfdm_xr_vst_camera_resolution_cfg_t OutRawResolution;
 	pfdm_xr_camera_error_t result = FYvrInterfaceWrapper::GetVSTCameraResolution(&OutRawResolution);
 	if (result != pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR)
 	{
@@ -125,12 +125,12 @@ bool UYvrBusinessBPLibrary::GetVSTCameraResolution(EVSTCameraResolution& OutReso
 
 bool UYvrBusinessBPLibrary::SetVSTCameraFormat(EVSTCameraFormat Format)
 {
-	return FYvrInterfaceWrapper::SetVSTCameraFormat((vst_camera_format_cfg_t)Format) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
+	return FYvrInterfaceWrapper::SetVSTCameraFormat((pfdm_xr_vst_camera_format_cfg_t)Format) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
 }
 
 bool UYvrBusinessBPLibrary::GetVSTCameraFormat(EVSTCameraFormat& OutFormat)
 {
-	vst_camera_format_cfg_t OutRawFormat;
+	pfdm_xr_vst_camera_format_cfg_t OutRawFormat;
 	pfdm_xr_camera_error_t result = FYvrInterfaceWrapper::GetVSTCameraFormat(&OutRawFormat);
 	if (result != pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR)
 	{
@@ -143,12 +143,12 @@ bool UYvrBusinessBPLibrary::GetVSTCameraFormat(EVSTCameraFormat& OutFormat)
 
 bool UYvrBusinessBPLibrary::SetVSTCameraOutputSource(EVSTCameraSource Source)
 {
-	return FYvrInterfaceWrapper::SetVSTCameraOutputSource((vst_camera_source_cfg_t)Source) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
+	return FYvrInterfaceWrapper::SetVSTCameraOutputSource((pfdm_xr_vst_camera_source_cfg_t)Source) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
 }
 
 bool UYvrBusinessBPLibrary::GetVSTCameraOutputSource(EVSTCameraSource& OutSource)
 {
-	vst_camera_source_cfg_t OutRawSource;
+	pfdm_xr_vst_camera_source_cfg_t OutRawSource;
 	pfdm_xr_camera_error_t result = FYvrInterfaceWrapper::GetVSTCameraOutputSource(&OutRawSource);
 	if (result != pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR)
 	{
@@ -161,8 +161,8 @@ bool UYvrBusinessBPLibrary::GetVSTCameraOutputSource(EVSTCameraSource& OutSource
 
 bool UYvrBusinessBPLibrary::GetVSTCameraIntrinsicExtrinsic(EVSTCameraID ID, FVSTCameraIntrinsicExtrinsic& OutParams)
 {
-	vst_camera_intrinsic_extrinsic_t OutRawParams;
-	pfdm_xr_camera_error_t result = FYvrInterfaceWrapper::GetVSTCameraIntrinsicExtrinsic((vst_camera_id_t)ID, &OutRawParams);
+	pfdm_xr_vst_camera_intrinsic_extrinsic_t OutRawParams;
+	pfdm_xr_camera_error_t result = FYvrInterfaceWrapper::GetVSTCameraIntrinsicExtrinsic((pfdm_xr_vst_camera_id_t)ID, &OutRawParams);
 	if (result != pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR)
 	{
 		return false;
@@ -183,6 +183,79 @@ bool UYvrBusinessBPLibrary::GetVSTCameraIntrinsicExtrinsic(EVSTCameraID ID, FVST
 	OutParams.Rotation.Z = OutRawParams.rz;
 	OutParams.Rotation.W = OutRawParams.rw;
 
+	OutParams.Distortion.SetNum(16);
+	FMemory::Memcpy(OutParams.Distortion.GetData(), OutRawParams.distortion, sizeof(float) * 16);
+	
+	return true;
+}
+
+bool UYvrBusinessBPLibrary::OpenTrackingCamera(ECameraType Type)
+{
+	return FYvrInterfaceWrapper::OpenTrackingCamera((pfdm_xr_camera_type_t)Type) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
+}
+
+bool UYvrBusinessBPLibrary::CloseTrackingCamera(ECameraType Type)
+{
+	return FYvrInterfaceWrapper::CloseTrackingCamera((pfdm_xr_camera_type_t)Type) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
+}
+
+bool UYvrBusinessBPLibrary::SubscribeFrame(ECameraType Type)
+{
+	return FYvrInterfaceWrapper::SubscribeFrame((pfdm_xr_camera_type_t)Type) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
+}
+
+bool UYvrBusinessBPLibrary::UnSubscribeFrame(ECameraType Type)
+{
+	return FYvrInterfaceWrapper::UnSubscribeFrame((pfdm_xr_camera_type_t)Type) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
+}
+
+bool UYvrBusinessBPLibrary::AcquireTrackingCameraFrame(ECameraType Type, FVSTCameraFrameItem& FrameOutput)
+{
+	pfdm_xr_camera_frame_item_t OutRawFrameOutput;
+	pfdm_xr_camera_error_t result = FYvrInterfaceWrapper::AcquireTrackingCameraFrame((pfdm_xr_camera_type_t)Type, &OutRawFrameOutput);
+	if (result != pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR)
+	{
+		return false;
+	}
+
+	FrameOutput.FrameNumber = OutRawFrameOutput.frame_number;
+	FrameOutput.Width = OutRawFrameOutput.width;
+	FrameOutput.Height = OutRawFrameOutput.height;
+	FrameOutput.Format = OutRawFrameOutput.format;
+	FrameOutput.ExposureDuration = OutRawFrameOutput.exposure_duration;
+	FrameOutput.SoeTimestamp = OutRawFrameOutput.soe_timestamp;
+	FrameOutput.SoeTimestampQ = OutRawFrameOutput.soe_timestamp_q;
+	FrameOutput.Gain = OutRawFrameOutput.gain;
+	FrameOutput.DataSize = OutRawFrameOutput.data_size;
+	if (OutRawFrameOutput.data[0] != nullptr)
+	{
+		FrameOutput.LeftEyeData.SetNum(FrameOutput.DataSize);
+		FMemory::Memcpy(FrameOutput.LeftEyeData.GetData(), (void*)OutRawFrameOutput.data[0], sizeof(uint8) * FrameOutput.DataSize);
+	}
+
+	if (OutRawFrameOutput.data[1] != nullptr)
+	{
+		FrameOutput.RightEyeData.SetNum(FrameOutput.DataSize);
+		FMemory::Memcpy(FrameOutput.RightEyeData.GetData(), (void*)OutRawFrameOutput.data[1], sizeof(uint8) * FrameOutput.DataSize);
+	}
+	return true;
+}
+
+bool UYvrBusinessBPLibrary::SetTrackingCameraFps(ECameraType Type, int32 Frequency)
+{
+	return FYvrInterfaceWrapper::SetTrackingCameraFps((pfdm_xr_camera_type_t)Type, Frequency) == pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR;
+}
+
+bool UYvrBusinessBPLibrary::GetTrackingCameraFps(ECameraType Type, int32& Frequency)
+{
+    int32_t OutRawFrequency;
+	pfdm_xr_camera_error_t result = FYvrInterfaceWrapper::GetTrackingCameraFps((pfdm_xr_camera_type_t)Type, &OutRawFrequency);
+	if (result != pfdm_xr_camera_error_t::PFDM_XR_CAM_ERROR_NO_ERROR)
+	{
+		return false;
+	}
+
+	Frequency = (int32)OutRawFrequency;
 	return true;
 }
 
@@ -270,11 +343,11 @@ void UYvrBusinessBPLibrary::UpdateRenderTargetFromYUVNV21(const TArray<uint8>& R
 		}
 	}
 
-	FRenderTarget* RenderTarget = RenderTarget2D->GameThread_GetRenderTargetResource();
 	FUpdateTextureRegion2D Region = FUpdateTextureRegion2D(0, 0, 0, 0, Width, Height);
 	ENQUEUE_RENDER_COMMAND(UpdateTextureRegionsData)(
 		[=](FRHICommandListImmediate& RHICmdList)
 		{
+			FRenderTarget* RenderTarget = RenderTarget2D->GetRenderTargetResource();
 			FTexture2DRHIRef TextureRHI = RenderTarget->GetRenderTargetTexture();
 			check(TextureRHI.IsValid());
 			RHIUpdateTexture2D(
@@ -287,3 +360,54 @@ void UYvrBusinessBPLibrary::UpdateRenderTargetFromYUVNV21(const TArray<uint8>& R
 		}
 		);
 }
+
+void UYvrBusinessBPLibrary::UpdateRenderTargetFromUVNVY8(const TArray<uint8> &RawData, int32 Width, int32 Height, UTextureRenderTarget2D *RenderTarget2D, uint8 OverrideAlpha)
+{
+    if (!RenderTarget2D || Width * Height != RawData.Num())
+    {
+        return;
+    }
+
+    EPixelFormat Format = RenderTarget2D->GetFormat();
+    if (RenderTarget2D->SizeX != Width || RenderTarget2D->SizeY != Height || Format != EPixelFormat::PF_B8G8R8A8)
+    {
+        RenderTarget2D->InitCustomFormat(Width, Height, EPixelFormat::PF_B8G8R8A8, false);
+    }
+
+    TArray<uint8> TargetTextureData;
+    TargetTextureData.SetNum(Width * Height * 4);
+
+    for (int32 i = 0; i < Height; ++i)
+    {
+        for (int32 j = 0; j < Width; ++j)
+        {
+            int32 Index = (i * Width + j) * 4;
+            uint8 Y = RawData[i * Width + j];
+
+            TargetTextureData[Index + 0] = Y;     // B
+            TargetTextureData[Index + 1] = Y;     // G
+            TargetTextureData[Index + 2] = Y;     // R
+            TargetTextureData[Index + 3] = OverrideAlpha; // A
+        }
+    }
+	
+    FUpdateTextureRegion2D Region(0, 0, 0, 0, Width, Height);
+    ENQUEUE_RENDER_COMMAND(UpdateTextureRegionsData)(
+		[=, TextureData = MoveTemp(TargetTextureData)](FRHICommandListImmediate& RHICmdList)
+        {
+			FRenderTarget* RenderTarget = RenderTarget2D->GetRenderTargetResource();
+            FTexture2DRHIRef TextureRHI = RenderTarget->GetRenderTargetTexture();
+            if (TextureRHI.IsValid())
+            {
+                RHIUpdateTexture2D(
+                    TextureRHI,
+                    0,
+                    Region,
+                    Width * 4,
+                    TextureData.GetData()
+                );
+            }
+        }
+    );
+}
+

@@ -122,6 +122,26 @@ struct FVSTCameraIntrinsicExtrinsic
 	FVector Position = FVector::ZeroVector;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
 	FQuat Rotation = FQuat::Identity;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "YvrLibrary")
+	TArray<float> Distortion;
+};
+
+UENUM(BlueprintType)
+enum class ECameraType :uint8
+{
+    PFDM_XR_CAMERA_TYPE_TRACKING_MASTER,
+    PFDM_XR_CAMERA_TYPE_TRACKING_SLAVE,
+    PFDM_XR_CAMERA_TYPE_TRACKING_AUX,
+    PFDM_XR_CAMERA_TYPE_EYE_TRACKING,
+    PFDM_XR_CAMERA_TYPE_TOF,
+    PFDM_XR_CAMERA_TYPE_MAX,
+};
+
+UENUM(BlueprintType)
+enum class ETrackingCameraFormat :uint8
+{
+    PFDM_XR_TRACKING_CAMERA_FMT_Y8,
+    PFDM_XR_TRACKING_CAMERA_FMT_RAW8,
 };
 
 UCLASS()
@@ -161,6 +181,22 @@ public:
 	static bool GetVSTCameraOutputSource(EVSTCameraSource& OutSource);
 	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
 	static bool GetVSTCameraIntrinsicExtrinsic(EVSTCameraID ID, FVSTCameraIntrinsicExtrinsic& OutParams);
+	
+	//tracking
+	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
+	static bool OpenTrackingCamera(ECameraType Type);
+	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
+	static bool CloseTrackingCamera(ECameraType Type);
+	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
+	static bool SubscribeFrame(ECameraType Type);
+	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
+	static bool UnSubscribeFrame(ECameraType Type);
+	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
+	static bool AcquireTrackingCameraFrame(ECameraType Type, FVSTCameraFrameItem& FrameOutput);
+	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
+	static bool SetTrackingCameraFps(ECameraType Type, int32 Frequency);
+	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
+	static bool GetTrackingCameraFps(ECameraType Type, int32& Frequency);
 
 	// Utils
 	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
@@ -168,4 +204,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
 	static void UpdateRenderTargetFromYUVNV21(const TArray<uint8>& RawData, int32 Width, int32 Height, UTextureRenderTarget2D* RenderTarget2D, uint8 OverrideAlpha = 255);
+	
+	UFUNCTION(BlueprintCallable, Category = "YvrLibrary")
+	static void UpdateRenderTargetFromUVNVY8(const TArray<uint8>& RawData, int32 Width, int32 Height, UTextureRenderTarget2D* RenderTarget2D, uint8 OverrideAlpha = 255);
 };
