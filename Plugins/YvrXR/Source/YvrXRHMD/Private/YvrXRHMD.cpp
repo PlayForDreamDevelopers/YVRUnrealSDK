@@ -480,7 +480,8 @@ bool FYvrXRHMDPlugin::GetRequiredExtensions(TArray<const ANSICHAR*>& OutExtensio
 bool FYvrXRHMDPlugin::GetOptionalExtensions(TArray<const ANSICHAR*>& OutExtensions)
 {
 #if PLATFORM_ANDROID
-	OutExtensions.Add(XR_KHR_OPENGL_ES_ENABLE_EXTENSION_NAME);
+	// not support opengles for now
+	// OutExtensions.Add(XR_KHR_OPENGL_ES_ENABLE_EXTENSION_NAME);
 	OutExtensions.Add(XR_KHR_VULKAN_ENABLE_EXTENSION_NAME);
 	OutExtensions.Add(XR_FB_FOVEATION_VULKAN_EXTENSION_NAME);
 
@@ -2780,7 +2781,7 @@ void FYvrXRHMD::OnBeginRendering_RHIThread(const FPipelinedFrameState& InFrameSt
 	}
 }
 
-void FYvrXRHMD::OnFinishRendering_RHIThread()
+void FYvrXRHMD::OnFinishRendering_RHIThread(IRHICommandContext& RHICmdContext)
 {
 	ensure(IsInRenderingThread() || IsInRHIThread());
 
@@ -2794,17 +2795,17 @@ void FYvrXRHMD::OnFinishRendering_RHIThread()
 	// We need to ensure we release the swap chain images even if the session is not running.
 	if (PipelinedLayerStateRHI.ColorSwapchain)
 	{
-		PipelinedLayerStateRHI.ColorSwapchain->ReleaseCurrentImage_RHIThread();
+		PipelinedLayerStateRHI.ColorSwapchain->ReleaseCurrentImage_RHIThread(&RHICmdContext);
 
 		if (bDepthExtensionSupported && PipelinedLayerStateRHI.DepthSwapchain)
 		{
-			PipelinedLayerStateRHI.DepthSwapchain->ReleaseCurrentImage_RHIThread();
+			PipelinedLayerStateRHI.DepthSwapchain->ReleaseCurrentImage_RHIThread(&RHICmdContext);
 		}
 
 		if (bEnableSpaceWarp && PipelinedLayerStateRHI.MotionVectorSwapchain && PipelinedLayerStateRHI.MotionVectorDepthSwapchain)
 		{
-			PipelinedLayerStateRHI.MotionVectorSwapchain->ReleaseCurrentImage_RHIThread();
-			PipelinedLayerStateRHI.MotionVectorDepthSwapchain->ReleaseCurrentImage_RHIThread();
+			PipelinedLayerStateRHI.MotionVectorSwapchain->ReleaseCurrentImage_RHIThread(&RHICmdContext);
+			PipelinedLayerStateRHI.MotionVectorDepthSwapchain->ReleaseCurrentImage_RHIThread(&RHICmdContext);
 		}
 	}
 
@@ -3047,7 +3048,10 @@ void FYvrXRHMD::CopyTexture_RenderThread(FRHICommandListImmediate& RHICmdList, F
 #endif
 
 			FRHISamplerState* SamplerState = DstRect.Size() == SrcRect.Size() ? TStaticSamplerState<SF_Point>::GetRHI() : TStaticSamplerState<SF_Bilinear>::GetRHI();
-			PixelShader->SetParameters(RHICmdList, SamplerState, SrcTexture);
+
+			FRHIBatchedShaderParameters& BatchedParameters = RHICmdList.GetScratchShaderParameters();
+			PixelShader->SetParameters(BatchedParameters, SamplerState, SrcTexture);
+			RHICmdList.SetBatchedShaderParameters(PixelShader.GetPixelShader(), BatchedParameters);
 
 			RendererModule->DrawRectangle(
 				RHICmdList,
@@ -3084,11 +3088,13 @@ void FYvrXRHMD::CopyTexture_RenderThread(FRHICommandListImmediate& RHICmdList, F
 
 				TShaderMapRef<FYvrCubemapPS> PixelShader(ShaderMap);
 				GraphicsPSOInit.BoundShaderState.PixelShaderRHI = PixelShader.GetPixelShader();
-				SetGraphicsPipelineState(RHICmdList, GraphicsPSOInit);
+				SetGraphicsPipelineState(RHICmdList, GraphicsPSOInit, 0);
 
 				FRHISamplerState* SamplerState = DstRect.Size() == SrcRect.Size() ? TStaticSamplerState<SF_Point>::GetRHI() : TStaticSamplerState<SF_Bilinear>::GetRHI();
 
-				PixelShader->SetParameters(RHICmdList, SamplerState, SrcTexture, FaceIndex);
+				FRHIBatchedShaderParameters& BatchedParameters = RHICmdList.GetScratchShaderParameters();
+				PixelShader->SetParameters(RHICmdList, SamplerState, BatchedParameters, SrcTexture, FaceIndex);
+				RHICmdList.SetBatchedShaderParameters(PixelShader.GetPixelShader(), BatchedParameters);
 
 				RendererModule->DrawRectangle(
 					RHICmdList,
@@ -3121,7 +3127,7 @@ void FYvrXRHMD::CopyTexture_RenderThread(FRHICommandListImmediate& RHICmdList, F
 	// Enqueue a command to release the image after the copy is done
 	RHICmdList.EnqueueLambda([DstSwapChain](FRHICommandListImmediate& InRHICmdList)
 	{
-		DstSwapChain->ReleaseCurrentImage_RHIThread();
+		DstSwapChain->ReleaseCurrentImage_RHIThread(&InRHICmdList.GetContext());
 	});
 }
 

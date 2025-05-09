@@ -114,7 +114,7 @@ void FYvrXRSwapchain::IncrementSwapChainIndex_RHIThread(int64 Timeout)
 }
 #endif
 
-void FYvrXRSwapchain::ReleaseCurrentImage_RHIThread()
+void FYvrXRSwapchain::ReleaseCurrentImage_RHIThread(IRHICommandContext* RHICmdContext)
 {
 	check(IsInRenderingThread() || IsInRHIThread());
 

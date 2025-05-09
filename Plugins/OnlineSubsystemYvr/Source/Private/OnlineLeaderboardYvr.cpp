@@ -129,8 +129,8 @@ bool FOnlineLeaderboardYvr::WriteLeaderboards(const FName& SessionName, const FU
 	for (const auto& LeaderboardName : WriteObject.LeaderboardNames)
 	{
 		YvrSubsystem.AddRequestDelegate(
-			OnlineSubsystemYvrWrapper::WriteLeaderboardItem(TCHAR_TO_ANSI(*LeaderboardName.ToString()), Score, nullptr, 0, (WriteObject.UpdateMethod != ELeaderboardUpdateMethod::Force)),
-			FYvrMessageOnCompleteDelegate::CreateLambda([this](YvrMessageHandle Message, bool bIsError)
+			OnlineSubsystemYvrWrapper::WriteLeaderboardItem(TCHAR_TO_ANSI(*LeaderboardName), Score, nullptr, 0, (WriteObject.UpdateMethod != ELeaderboardUpdateMethod::Force)),
+			FYvrMessageOnCompleteDelegate::CreateLambda([](YvrMessageHandle Message, bool bIsError)
 		{
 			if (bIsError)
 			{

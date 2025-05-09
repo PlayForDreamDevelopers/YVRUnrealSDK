@@ -372,7 +372,7 @@ public:
 	virtual ~FYvrXRHMD();
 
 	void OnBeginRendering_RHIThread(const FPipelinedFrameState& InFrameState, FXRSwapChainPtr ColorSwapchain, FXRSwapChainPtr DepthSwapchain, FXRSwapChainPtr MotionVectorSwapchain, FXRSwapChainPtr MotionVectorDepthSwapchain);
-	void OnFinishRendering_RHIThread();
+	void OnFinishRendering_RHIThread(IRHICommandContext& RHICmdContext);
 
 	FIntPoint GetRenderTargetSize() const;
 	FIntPoint GetRenderViewportSize(const FIntPoint& RenderTargetSize) const;

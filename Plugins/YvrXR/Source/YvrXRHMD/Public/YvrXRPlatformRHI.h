@@ -4,7 +4,8 @@
 
 #if PLATFORM_ANDROID
 #define XR_USE_PLATFORM_ANDROID 1
-#define XR_USE_GRAPHICS_API_OPENGL_ES 1
+// not support opengles for now
+// #define XR_USE_GRAPHICS_API_OPENGL_ES 1
 #define XR_USE_GRAPHICS_API_VULKAN 1
 #endif
 
@@ -25,6 +26,7 @@
 #ifdef XR_USE_GRAPHICS_API_VULKAN
 #include "VulkanRHIPrivate.h"
 #include "VulkanResources.h"
+#include "VulkanDevice.h"
 #endif // XR_USE_GRAPHICS_API_VULKAN
 
 #if PLATFORM_ANDROID

@@ -5,13 +5,13 @@
 #include "YvrXRHMD_Swapchain.h"
 #include "YvrXRCore.h"
 
-bool FYvrXRRenderBridge::Present(int32& InOutSyncInterval)
+bool FYvrXRRenderBridge::Present(IRHICommandContext& RHICmdContext, int32& InOutSyncInterval)
 {
 	bool bNeedsNativePresent = true;
 
 	if (OpenXRHMD)
 	{
-		OpenXRHMD->OnFinishRendering_RHIThread();
+		OpenXRHMD->OnFinishRendering_RHIThread(RHICmdContext);
 		bNeedsNativePresent = !OpenXRHMD->IsStandaloneStereoOnlyDevice();
 	}
 

@@ -29,16 +29,16 @@ public:
 	}
 	FYvrCubemapPS() {}
 
-	void SetParameters(FRHICommandList& RHICmdList, const FTexture* Texture, int FaceIndex)
+	void SetParameters(FRHICommandList& RHICmdList, FRHIBatchedShaderParameters& RHIBSP, FTexture* Texture, int FaceIndex)
 	{
-		SetTextureParameter(RHICmdList, RHICmdList.GetBoundPixelShader(), InTexture, InTextureSampler, Texture);
-		SetShaderValue(RHICmdList, RHICmdList.GetBoundPixelShader(), InFaceIndexParameter, FaceIndex);
+		SetTextureParameter(RHIBSP, InTexture, InTextureSampler, Texture);
+		SetShaderValue(RHIBSP, InFaceIndexParameter, FaceIndex);
 	}
 
-	void SetParameters(FRHICommandList& RHICmdList, FRHISamplerState* SamplerStateRHI, FRHITexture* TextureRHI, int FaceIndex)
+	void SetParameters(FRHICommandList& RHICmdList, FRHISamplerState* SamplerStateRHI, FRHIBatchedShaderParameters& RHIBSP, FRHITexture* TextureRHI, int FaceIndex)
 	{
-		SetTextureParameter(RHICmdList, RHICmdList.GetBoundPixelShader(), InTexture, InTextureSampler, SamplerStateRHI, TextureRHI);
-		SetShaderValue(RHICmdList, RHICmdList.GetBoundPixelShader(), InFaceIndexParameter, FaceIndex);
+		SetTextureParameter(RHIBSP, InTexture, InTextureSampler, SamplerStateRHI, TextureRHI);
+		SetShaderValue(RHIBSP, InFaceIndexParameter, FaceIndex);
 	}
 
 private:
