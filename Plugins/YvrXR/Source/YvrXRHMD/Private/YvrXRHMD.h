@@ -481,4 +481,6 @@ private:
 	FVector					BasePosition;
 
 	FYvrPollEventDelegate   PollEventDelegate;
+
+	XrCompositionLayerAlphaBlendFB BlendState = { XR_TYPE_COMPOSITION_LAYER_ALPHA_BLEND_FB };
 };

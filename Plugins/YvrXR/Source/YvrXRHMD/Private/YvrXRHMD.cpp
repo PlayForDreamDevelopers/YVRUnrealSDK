@@ -71,6 +71,13 @@ static TAutoConsoleVariable<int32> CVarYvrEnableSpaceWarpInternal(
 	TEXT("1 Enable spacewarp, for internal enegine checking, don't modify.\n"),
 	ECVF_Scalability | ECVF_RenderThreadSafe);
 
+static TAutoConsoleVariable<int32> CVarYvrBlendMode(
+	TEXT("r.Mobile.Yvr.BlendMode"),
+	0,
+	TEXT("0: Additive blend mode (Default)\n")
+	TEXT("1: Transparent blend mode\n"),
+	ECVF_Default);
+
 uint32 FYvrXRHMD::EyebufferLayerId = 0;
 
 namespace {
@@ -501,6 +508,7 @@ bool FYvrXRHMDPlugin::GetOptionalExtensions(TArray<const ANSICHAR*>& OutExtensio
 	OutExtensions.Add(XR_FB_SPACE_WARP_EXTENSION_NAME);
 	OutExtensions.Add(XR_FB_HAND_TRACKING_MESH_EXTENSION_NAME);
 	OutExtensions.Add(XR_FB_COMPOSITION_LAYER_SETTINGS_EXTENSION_NAME);
+	OutExtensions.Add(XR_FB_COMPOSITION_LAYER_ALPHA_BLEND_EXTENSION_NAME);
 
 	OutExtensions.Add(XR_FB_SPATIAL_ENTITY_EXTENSION_NAME);
 	OutExtensions.Add(XR_FB_SPATIAL_ENTITY_QUERY_EXTENSION_NAME);
@@ -2826,6 +2834,17 @@ void FYvrXRHMD::OnFinishRendering_RHIThread(IRHICommandContext& RHICmdContext)
 				{
 					Projection->type = XR_TYPE_COMPOSITION_LAYER_PROJECTION;
 					Projection->next = nullptr;
+
+					if(CVarYvrBlendMode.GetValueOnAnyThread() == 1)
+					{
+						BlendState.next = nullptr;
+						BlendState.srcFactorColor = XR_BLEND_FACTOR_SRC_ALPHA_FB;
+						BlendState.dstFactorColor = XR_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA_FB;
+						BlendState.srcFactorAlpha = XR_BLEND_FACTOR_ONE_FB;
+						BlendState.dstFactorAlpha = XR_BLEND_FACTOR_ZERO_FB;
+						Projection->next = &BlendState;
+					}
+
 					Projection->layerFlags = XR_COMPOSITION_LAYER_BLEND_TEXTURE_SOURCE_ALPHA_BIT;
 					if (!bIsMobileHDREnabled)
 					{
